@@ -11,13 +11,44 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String     @id @default(cuid())
+  email     String     @unique
   name      String?
   password  String
-  isPro     Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isPro     Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  timelines Timeline[]
 
   @@map("users")
+}
+
+model Timeline {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  isPublic    Boolean     @default(false)
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  milestones  Milestone[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("timelines")
+}
+
+model Milestone {
+  id          String    @id @default(cuid())
+  title       String
+  date        DateTime
+  description String?
+  category    String?
+  imageUrl    String?
+  videoUrl    String?
+  timelineId  String
+  timeline    Timeline  @relation(fields: [timelineId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("milestones")
 }

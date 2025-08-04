@@ -11,7 +11,8 @@ import { RequireAuth, RequireGuest } from './components/auth/ProtectedRoute';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
-import { Layout } from './components/Layout';
+import { Main } from './pages/Main';
+import { TimelineEditor } from './pages/TimelineEditor';
 import './index.css';
 
 // Create a client
@@ -56,6 +57,24 @@ function App() {
                   <RequireGuest>
                     <RegisterPage />
                   </RequireGuest>
+                }
+              />
+
+              {/* Protected routes (require authentication) */}
+              <Route
+                path="/dashboard"
+                element={
+                  <RequireAuth>
+                    <Main />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/timeline/:id"
+                element={
+                  <RequireAuth>
+                    <TimelineEditor />
+                  </RequireAuth>
                 }
               />
 
