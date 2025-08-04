@@ -9,8 +9,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from './contexts/AuthContext';
 import { RequireAuth, RequireGuest } from './components/auth/ProtectedRoute';
 import { HomePage } from './pages/HomePage';
-import { DashboardPage } from './pages/DashboardPage';
-import { EditorPage } from './pages/EditorPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { Layout } from './components/Layout';
@@ -61,17 +59,6 @@ function App() {
                 }
               />
 
-              {/* Protected routes */}
-              <Route
-                path="/dashboard"
-                element={
-                  <RequireAuth>
-                    <Layout>
-                      <DashboardPage />
-                    </Layout>
-                  </RequireAuth>
-                }
-              />
               {/* Catch all route */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
