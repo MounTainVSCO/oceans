@@ -47,59 +47,63 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="space-y-4">
         <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
+          <input
             {...register('email')}
-            placeholder="Enter your email"
-            error={errors.email?.message}
+            type="email"
+            placeholder="Email address"
+            className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm ring-offset-background transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           />
+          {errors.email && (
+            <p className="mt-2 text-sm text-destructive">{errors.email.message}</p>
+          )}
         </div>
-
+        
         <div>
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
+          <input
             {...register('password')}
-            placeholder="Enter your password"
-            error={errors.password?.message}
+            type="password"
+            placeholder="Password"
+            className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm ring-offset-background transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           />
+          {errors.password && (
+            <p className="mt-2 text-sm text-destructive">{errors.password.message}</p>
+          )}
         </div>
-
-        {errors.root && (
-          <div className="bg-red-50 border border-red-200 rounded-md p-4">
-            <p className="text-sm text-red-600">{errors.root.message}</p>
-          </div>
-        )}
-
-        <Button
-          type="submit"
-          disabled={loginMutation.isPending}
-          className="w-full"
+      </div>
+      
+      {errors.root && (
+        <div className="rounded-sm border border-destructive/50 bg-destructive/10 p-3">
+          <p className="text-sm text-destructive">{errors.root.message}</p>
+        </div>
+      )}
+      
+      <button
+        type="submit"
+        disabled={loginMutation.isPending}
+        className="inline-flex scale-100 items-center justify-center rounded-sm text-sm font-medium ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 h-10 px-6 w-full"
+      >
+        {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
+      </button>
+      
+      <div className="flex items-center justify-between text-sm">
+        <label className="flex items-center space-x-2 cursor-pointer">
+          <input
+            type="checkbox"
+            id="rememberMe"
+            className="rounded border-border text-primary focus:ring-primary focus:ring-offset-0"
+          />
+          <span className="text-muted-foreground">Remember me</span>
+        </label>
+        <a 
+          href="/reset-password"
+          className="text-primary underline-offset-4 hover:underline"
         >
-          {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
-        </Button>
-
-        {onSwitchToRegister && (
-          <div className="text-center">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <button
-                type="button"
-                onClick={onSwitchToRegister}
-                className="font-medium text-blue-600 hover:text-blue-500"
-              >
-                Sign up
-              </button>
-            </p>
-          </div>
-        )}
-      </form>
-    </div>
+          Forgot password?
+        </a>
+      </div>
+    </form>
   );
 };
