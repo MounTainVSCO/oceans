@@ -19,6 +19,7 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   timelines Timeline[]
+  sites     Site[]
 
   @@map("users")
 }
@@ -31,6 +32,7 @@ model Timeline {
   userId      String
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   milestones  Milestone[]
+  sites       Site[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
@@ -51,4 +53,40 @@ model Milestone {
   updatedAt   DateTime  @updatedAt
 
   @@map("milestones")
+}
+
+model Site {
+  id          String    @id @default(cuid())
+  subdomain   String    @unique
+  title       String
+  description String?
+  layout      String    @default("timeline") // timeline, calendar, scrapbook, etc.
+  isActive    Boolean   @default(true)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timelineId  String?
+  timeline    Timeline? @relation(fields: [timelineId], references: [id], onDelete: Cascade)
+  customDomain String?  // for future custom domain support
+  sslEnabled   Boolean   @default(true)
+  buildStatus  String    @default("pending") // pending, building, deployed, failed
+  deployUrl    String?   // URL where the site is deployed
+  lastDeployAt DateTime?
+  deployments  SiteDeployment[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("sites")
+}
+
+model SiteDeployment {
+  id        String   @id @default(cuid())
+  siteId    String
+  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  status    String   // pending, building, success, failed
+  buildLog  String?  // build output/errors
+  version   Int      @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("site_deployments")
 }

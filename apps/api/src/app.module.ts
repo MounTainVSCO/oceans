@@ -6,6 +6,7 @@ import { ComponentsModule } from './modules/components/components.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { ResumeModule } from './modules/resume/resume.module';
 import { TimelineModule } from './modules/timeline/timeline.module';
+import { PublishingModule } from './modules/publishing/publishing.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TimelineModule } from './modules/timeline/timeline.module';
     AnalyticsModule,
     ResumeModule,
     TimelineModule,
+    PublishingModule,
   ],
 })
 export class AppModule {}
