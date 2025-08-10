@@ -1,129 +1,197 @@
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Typography } from '@/components/ui/Typography';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Button } from '@/components/Button';
 
-// Mock data - in real app this would come from API based on timeline ID
-const mockTimelineData = {
-  id: '1',
-  title: 'My Life Journey',
-  description: 'A collection of my most important milestones and achievements',
-  isPublic: false,
-  milestones: [
-    {
-      id: 1,
-      title: "Started my first job at TechCorp",
-      date: "2024-01-15",
-      description: "Joined as a Software Engineer. Excited to begin this new chapter in my career journey.",
-      category: "career",
-      emoji: "💼"
-    },
-    {
-      id: 2,
-      title: "Graduated from College",
-      date: "2023-05-20",
-      description: "Received my Bachelor's degree in Computer Science from State University. Four years of hard work paid off!",
-      category: "learning",
-      emoji: "🎓"
-    },
-    {
-      id: 3,
-      title: "Got my driver's license",
-      date: "2022-08-14",
-      description: "Finally passed my driving test on the third try. Freedom at last!",
-      category: "life",
-      emoji: "🚗"
-    },
-    {
-      id: 4,
-      title: "Started college",
-      date: "2019-09-01",
-      description: "First day at State University. New city, new friends, new adventures ahead.",
-      category: "learning",
-      emoji: "🏫"
-    },
-    {
-      id: 5,
-      title: "High school graduation",
-      date: "2019-06-15",
-      description: "Graduated from Springfield High School. Ready for the next chapter!",
-      category: "learning",
-      emoji: "🎓"
-    },
-    {
-      id: 6,
-      title: "Got my first job",
-      date: "2018-06-20",
-      description: "Started working part-time at the local coffee shop. First taste of earning my own money.",
-      category: "career",
-      emoji: "☕"
-    },
-    {
-      id: 7,
-      title: "Turned 18",
-      date: "2018-03-15",
-      description: "Officially an adult! Can vote, sign contracts, and make my own decisions.",
-      category: "life",
-      emoji: "🗳️"
-    },
-    {
-      id: 8,
-      title: "Started high school",
-      date: "2015-09-08",
-      description: "First day at Springfield High School. Nervous but excited for high school life.",
-      category: "learning",
-      emoji: "🏫"
-    },
-    {
-      id: 9,
-      title: "Learned to ride a bike",
-      date: "2008-07-04",
-      description: "Dad finally took off the training wheels and I rode my first solo bike ride around the block!",
-      category: "life",
-      emoji: "🚲"
-    },
-    {
-      id: 10,
-      title: "Started elementary school",
-      date: "2006-09-05",
-      description: "My first day of school at Maple Elementary. Met my best friend Sarah in kindergarten.",
-      category: "learning",
-      emoji: "🏫"
-    },
-    {
-      id: 11,
-      title: "Born",
-      date: "2000-03-15",
-      description: "I entered the world today in Springfield General Hospital. My life's journey begins!",
-      category: "life",
-      emoji: "🐣"
-    }
-  ]
-};
+interface Milestone {
+  id: string;
+  title: string;
+  date: string;
+  description?: string;
+  category?: string;
+  imageUrl?: string;
+  videoUrl?: string;
+}
+
+interface Timeline {
+  id: string;
+  title: string;
+  description?: string;
+  isPublic: boolean;
+  milestones: Milestone[];
+}
+
+interface NewMilestone {
+  title: string;
+  date: string;
+  description: string;
+  category: string;
+  imageUrl: string;
+  videoUrl: string;
+}
 
 export function TimelineEditor() {
   const { id } = useParams<{ id: string }>();
-  const [timeline, setTimeline] = useState(mockTimelineData);
-  const [selectedMilestone, setSelectedMilestone] = useState<any>(null);
+  const [timeline, setTimeline] = useState<Timeline | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedMilestone, setSelectedMilestone] = useState<Milestone | null>(null);
   const [activeTab, setActiveTab] = useState<'editing' | 'settings' | 'templates'>('editing');
   const [selectedTemplate, setSelectedTemplate] = useState('default');
+  const [showAddModal, setShowAddModal] = useState(false);
   const [editingTimeline, setEditingTimeline] = useState({
-    title: timeline.title,
-    description: timeline.description,
-    isPublic: timeline.isPublic
+    title: '',
+    description: '',
+    isPublic: false
+  });
+  const [newMilestone, setNewMilestone] = useState<NewMilestone>({
+    title: '',
+    date: '',
+    description: '',
+    category: 'life',
+    imageUrl: '',
+    videoUrl: ''
   });
 
-  const handleSaveTimeline = () => {
-    // TODO: Save timeline to backend
-    setTimeline(prev => ({
-      ...prev,
-      ...editingTimeline
-    }));
+  // Fetch timeline data
+  useEffect(() => {
+    if (id) {
+      fetchTimeline();
+    }
+  }, [id]);
+
+  const fetchTimeline = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/timelines/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setTimeline(data);
+        setEditingTimeline({
+          title: data.title,
+          description: data.description || '',
+          isPublic: data.isPublic
+        });
+      }
+    } catch (error) {
+      console.error('Failed to fetch timeline:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleMilestoneSelect = (milestone: any) => {
+  const handleSaveTimeline = async () => {
+    if (!timeline) return;
+    
+    try {
+      const response = await fetch(`/api/timelines/${timeline.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(editingTimeline),
+      });
+      
+      if (response.ok) {
+        const updatedTimeline = await response.json();
+        setTimeline(updatedTimeline);
+      }
+    } catch (error) {
+      console.error('Failed to save timeline:', error);
+    }
+  };
+
+  const handleMilestoneSelect = (milestone: Milestone) => {
     setSelectedMilestone(milestone);
     setActiveTab('editing');
+  };
+
+  const handleAddMilestone = async () => {
+    if (!timeline) return;
+    
+    try {
+      const response = await fetch(`/api/timelines/${timeline.id}/milestones`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(newMilestone),
+      });
+      
+      if (response.ok) {
+        const createdMilestone = await response.json();
+        setTimeline(prev => prev ? {
+          ...prev,
+          milestones: [...prev.milestones, createdMilestone]
+        } : null);
+        setNewMilestone({
+          title: '',
+          date: '',
+          description: '',
+          category: 'life',
+          imageUrl: '',
+          videoUrl: ''
+        });
+        setShowAddModal(false);
+      }
+    } catch (error) {
+      console.error('Failed to add milestone:', error);
+    }
+  };
+
+  const handleUpdateMilestone = async () => {
+    if (!selectedMilestone) return;
+    
+    try {
+      const response = await fetch(`/api/timelines/${timeline?.id}/milestones/${selectedMilestone.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(selectedMilestone),
+      });
+      
+      if (response.ok) {
+        const updatedMilestone = await response.json();
+        setTimeline(prev => prev ? {
+          ...prev,
+          milestones: prev.milestones.map(m => 
+            m.id === updatedMilestone.id ? updatedMilestone : m
+          )
+        } : null);
+      }
+    } catch (error) {
+      console.error('Failed to update milestone:', error);
+    }
+  };
+
+  const handleDeleteMilestone = async () => {
+    if (!selectedMilestone) return;
+    
+    try {
+      const response = await fetch(`/api/timelines/${timeline?.id}/milestones/${selectedMilestone.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (response.ok) {
+        setTimeline(prev => prev ? {
+          ...prev,
+          milestones: prev.milestones.filter(m => m.id !== selectedMilestone.id)
+        } : null);
+        setSelectedMilestone(null);
+      }
+    } catch (error) {
+      console.error('Failed to delete milestone:', error);
+    }
   };
 
   const getLifeStage = (date: string) => {
@@ -167,19 +235,50 @@ export function TimelineEditor() {
     return colors[category as keyof typeof colors] || colors.default;
   };
 
+  if (loading) {
+    return (
+      <div className="h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading timeline...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!timeline) {
+    return (
+      <div className="h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600">Timeline not found</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="h-screen bg-gray-50 flex">
+    <>
+      <div className="h-screen bg-gray-50 flex">
 
       {/* Left Panel - Editor */}
       <div className="w-2/5 bg-white border-r border-gray-200 overflow-y-auto">
         <div className="p-4">
-          {/* Save Button */}
-          <Button 
-            onClick={handleSaveTimeline}
-            className="w-full bg-gray-900 hover:bg-gray-800 text-white mb-4 text-sm py-2"
-          >
-            Save Changes
-          </Button>
+          {/* Action Buttons */}
+          <div className="space-y-2 mb-4">
+            <Button 
+              onClick={handleSaveTimeline}
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white text-sm py-2"
+            >
+              Save Changes
+            </Button>
+            <Button 
+              onClick={() => setShowAddModal(true)}
+              variant="outline"
+              className="w-full text-sm py-2"
+            >
+              Add Milestone
+            </Button>
+          </div>
 
           {/* Tabs */}
           <div className="flex border-b border-gray-200 mb-4">
@@ -399,6 +498,7 @@ export function TimelineEditor() {
                     <input
                       type="text"
                       value={selectedMilestone.title}
+                      onChange={(e) => setSelectedMilestone(prev => prev ? {...prev, title: e.target.value} : null)}
                       className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-500"
                     />
                   </div>
@@ -410,6 +510,7 @@ export function TimelineEditor() {
                     <input
                       type="date"
                       value={selectedMilestone.date}
+                      onChange={(e) => setSelectedMilestone(prev => prev ? {...prev, date: e.target.value} : null)}
                       className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-500"
                     />
                   </div>
@@ -419,7 +520,8 @@ export function TimelineEditor() {
                       Category
                     </label>
                     <select
-                      value={selectedMilestone.category}
+                      value={selectedMilestone.category || 'life'}
+                      onChange={(e) => setSelectedMilestone(prev => prev ? {...prev, category: e.target.value} : null)}
                       className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-500"
                     >
                       <option value="career">Career</option>
@@ -437,7 +539,8 @@ export function TimelineEditor() {
                       Description
                     </label>
                     <textarea
-                      value={selectedMilestone.description}
+                      value={selectedMilestone.description || ''}
+                      onChange={(e) => setSelectedMilestone(prev => prev ? {...prev, description: e.target.value} : null)}
                       rows={3}
                       className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-500"
                     />
@@ -449,6 +552,8 @@ export function TimelineEditor() {
                     </label>
                     <input
                       type="url"
+                      value={selectedMilestone.imageUrl || ''}
+                      onChange={(e) => setSelectedMilestone(prev => prev ? {...prev, imageUrl: e.target.value} : null)}
                       placeholder="https://example.com/image.jpg"
                       className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-500"
                     />
@@ -460,16 +565,25 @@ export function TimelineEditor() {
                     </label>
                     <input
                       type="url"
+                      value={selectedMilestone.videoUrl || ''}
+                      onChange={(e) => setSelectedMilestone(prev => prev ? {...prev, videoUrl: e.target.value} : null)}
                       placeholder="https://example.com/video.mp4"
                       className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-500"
                     />
                   </div>
                   
                   <div className="flex gap-2 pt-2">
-                    <Button className="bg-gray-900 hover:bg-gray-800 text-white flex-1 text-xs py-1.5">
+                    <Button 
+                      onClick={handleUpdateMilestone}
+                      className="bg-gray-900 hover:bg-gray-800 text-white flex-1 text-xs py-1.5"
+                    >
                       Save
                     </Button>
-                    <Button variant="outline" className="text-red-600 border-red-300 hover:bg-red-50 text-xs py-1.5">
+                    <Button 
+                      onClick={handleDeleteMilestone}
+                      variant="outline" 
+                      className="text-red-600 border-red-300 hover:bg-red-50 text-xs py-1.5"
+                    >
                       Delete
                     </Button>
                   </div>
@@ -560,14 +674,15 @@ export function TimelineEditor() {
                             <div className="flex items-start justify-between gap-3 mb-2">
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-1">
-                                  <span className="text-sm">{milestone.emoji}</span>
                                   <h4 className="text-sm font-medium">{milestone.title}</h4>
                                 </div>
                                 <div className="flex items-center gap-2 mb-1">
                                   <span className="text-xs text-gray-500">{formatDate(milestone.date)}</span>
-                                  <span className={`px-1.5 py-0.5 text-xs rounded uppercase tracking-wider font-medium ${getCategoryColor(milestone.category)}`}>
-                                    {milestone.category}
-                                  </span>
+                                  {milestone.category && (
+                                    <span className={`px-1.5 py-0.5 text-xs rounded uppercase tracking-wider font-medium ${getCategoryColor(milestone.category)}`}>
+                                      {milestone.category}
+                                    </span>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -587,6 +702,128 @@ export function TimelineEditor() {
           </div>
         </div>
       </div>
+
+      {/* Add Milestone Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Add New Milestone</h3>
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Title *
+                </label>
+                <input
+                  type="text"
+                  value={newMilestone.title}
+                  onChange={(e) => setNewMilestone(prev => ({...prev, title: e.target.value}))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  placeholder="Enter milestone title"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Date *
+                </label>
+                <input
+                  type="date"
+                  value={newMilestone.date}
+                  onChange={(e) => setNewMilestone(prev => ({...prev, date: e.target.value}))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Category
+                </label>
+                <select
+                  value={newMilestone.category}
+                  onChange={(e) => setNewMilestone(prev => ({...prev, category: e.target.value}))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+                >
+                  <option value="career">Career</option>
+                  <option value="learning">Learning</option>
+                  <option value="life">Life</option>
+                  <option value="health">Health</option>
+                  <option value="creative">Creative</option>
+                  <option value="travel">Travel</option>
+                  <option value="relationships">Relationships</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Description
+                </label>
+                <textarea
+                  value={newMilestone.description}
+                  onChange={(e) => setNewMilestone(prev => ({...prev, description: e.target.value}))}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  placeholder="Describe this milestone..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Image URL
+                </label>
+                <input
+                  type="url"
+                  value={newMilestone.imageUrl}
+                  onChange={(e) => setNewMilestone(prev => ({...prev, imageUrl: e.target.value}))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  placeholder="https://example.com/image.jpg"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Video URL
+                </label>
+                <input
+                  type="url"
+                  value={newMilestone.videoUrl}
+                  onChange={(e) => setNewMilestone(prev => ({...prev, videoUrl: e.target.value}))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  placeholder="https://example.com/video.mp4"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <Button
+                onClick={() => setShowAddModal(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleAddMilestone}
+                className="flex-1 bg-gray-900 hover:bg-gray-800 text-white"
+                disabled={!newMilestone.title || !newMilestone.date}
+              >
+                Add Milestone
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+    </>
   );
 }

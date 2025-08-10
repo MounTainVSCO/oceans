@@ -54,7 +54,7 @@ export class MilestoneService {
       throw new NotFoundException('Milestone not found');
     }
 
-    const updateData = { ...updateMilestoneDto };
+    const updateData: any = { ...updateMilestoneDto };
     if (updateMilestoneDto.date) {
       updateData.date = new Date(updateMilestoneDto.date);
     }

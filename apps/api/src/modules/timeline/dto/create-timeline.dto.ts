@@ -2,7 +2,7 @@ import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateTimelineDto {
   @IsString()
-  title: string;
+  title!: string;
 
   @IsOptional()
   @IsString()

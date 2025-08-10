@@ -14,14 +14,14 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`text-center ${className}`}>
-      <div className="w-12 h-12 bg-gray-900 rounded-sm flex items-center justify-center mx-auto mb-6">
+    <div className={`group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out ${className}`}>
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
         {icon}
       </div>
-      <h3 className="text-lg font-semibold mb-3 text-gray-900 tracking-tight">
+      <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">
         {title}
       </h3>
-      <p className="text-gray-600 leading-relaxed text-sm">
+      <p className="mt-1.5 leading-relaxed text-[#6b5748]">
         {description}
       </p>
     </div>

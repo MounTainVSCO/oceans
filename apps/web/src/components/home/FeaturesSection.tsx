@@ -1,628 +1,143 @@
+import BearAnim from './anim/bear';
+
 export function FeaturesSection() {
   return (
-    <section id="features-section" className="relative mx-auto max-w-7xl px-6 py-24 lg:px-12">
-      <h2 className="text-4xl font-bold">Rich in features, not in pricing.</h2>
-      <p className="max-w-4xl text-base leading-relaxed">Reactive Resume is a passion project of over 3 years of hard work, and with that comes a number of re-iterated ideas and features that have been built to (near) perfection.</p>
-      <div className="flex items-center justify-center flex-col gap-2 !mt-12 flex flex-wrap items-center gap-4">
-        <div className="line-y grid grid-cols-[1fr_1px_1fr_1px_1fr]" role="tablist" aria-orientation="horizontal">
-          <button
-            className="group relative flex items-center justify-center gap-4 p-4 focus:not-data-focus:outline-none data-selected:text-foreground max-lg:flex-col sm:p-6"
-            id="headlessui-tabs-tab-:Rb8jkq:"
-            role="tab"
-            type="button"
-            aria-selected="true"
-            tabIndex={0}
-            data-headlessui-state="selected"
-            data-selected=""
-            aria-controls="headlessui-tabs-panel-:Rd8jkq:"
-          >
-            <div className="absolute -inset-x-px inset-y-0 bg-foreground/5 not-group-data-selected:hidden"></div>
-            <svg
-              className="w-20 shrink-0 sm:w-30 *:data-lift:transition-transform *:data-lift:duration-300 group-hover:*:data-lift:-translate-y-0.5 group-data-selected:*:data-lift:translate-y-0"
-              aria-hidden="true"
-              fill="none"
-              viewBox="0 0 120 72"
-            >
-              <path
-                className="fill-foreground"
-                d="M56.095 7 8.464 34.5c-.957.553-1.435 1.276-1.435 2v3c0 .724.478 1.448 1.435 2L56.095 69c1.913 1.105 5.015 1.105 6.928 0l47.632-27.5c.956-.552 1.435-1.276 1.435-2v-3c-.001-.724-.479-1.447-1.435-2L63.023 7c-1.913-1.104-5.015-1.104-6.928 0"
-              />
-              <path
-                stroke="currentColor"
-                strokeOpacity="0.4"
-                d="M112.09 36.5c-.001-.724-.479-1.447-1.435-2L63.023 7c-1.913-1.104-5.015-1.104-6.928 0L8.464 34.5c-.957.553-1.435 1.276-1.435 2m105.061 0c0 .724-.479 1.448-1.435 2L63.023 66c-1.913 1.105-5.015 1.105-6.928 0L8.464 38.5c-.957-.552-1.435-1.276-1.435-2m105.061 0v3c0 .724-.479 1.448-1.435 2L63.023 69c-1.913 1.105-5.015 1.105-6.928 0L8.464 41.5c-.957-.552-1.435-1.276-1.435-2v-3"
-              />
-              <path
-                fill="currentColor"
-                stroke="currentColor"
-                d="M11.062 37c-.478-.276-.478-.724 0-1L58.694 8.5c.478-.276 1.253-.276 1.732 0l2.598 1.5c.478.276.478.724 0 1L15.392 38.5c-.478.276-1.253.276-1.732 0z"
-                opacity="0.1"
-              />
-              <g fill="currentColor" stroke="currentColor" opacity="0.1">
-                <path d="M19.723 42c-.479-.276-.479-.724 0-1l47.63-27.5c.48-.276 1.255-.276 1.733 0L89.004 25c.479.276.479.724 0 1l-47.63 27.5c-.48.276-1.255.276-1.733 0z" />
-                <path d="M34.445 31.5c-.479-.276-.479-.724 0-1L49.167 22c.478-.276 1.254-.276 1.732 0l23.383 13.5c.478.276.478.724 0 1L59.559 45c-.478.276-1.253.276-1.732 0z" />
-              </g>
-              <path
-                fill="currentColor"
-                stroke="currentColor"
-                d="M45.703 57c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.254-.276 1.732 0l12.99 7.5c.479.276.479.724 0 1L60.426 64.5c-.478.276-1.254.276-1.732 0z"
-                opacity="0.1"
-              />
-              <g data-lift="true">
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M11.062 32c-.478-.276-.478-.724 0-1L58.694 3.5c.478-.276 1.253-.276 1.732 0L63.024 5c.478.276.478.724 0 1L15.392 33.5c-.478.276-1.253.276-1.732 0z"
-                />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M19.723 37c-.479-.276-.479-.724 0-1l47.63-27.5c.48-.276 1.255-.276 1.733 0L89.004 20c.479.276.479.724 0 1l-47.63 27.5c-.48.276-1.255.276-1.733 0z"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeOpacity="0.3"
-                  d="M37.909 44.5c-.478-.276-.478-.724 0-1l9.526-5.5c.479-.276 1.254-.276 1.732 0l1.732 1c.479.276.479.724 0 1l-9.526 5.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M34.445 26.5c-.479-.276-.479-.724 0-1L49.167 17c.478-.276 1.254-.276 1.732 0l23.383 13.5c.478.276.478.724 0 1L59.559 40c-.478.276-1.253.276-1.732 0z"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeOpacity="0.3"
-                  d="M56.096 36c-.479-.276-.479-.724 0-1l9.526-5.5c.478-.276 1.254-.276 1.732 0l1.732 1c.479.276.479.724 0 1L59.56 37c-.479.276-1.254.276-1.732 0zM70.818 25.5c-.478-.276-.478-.724 0-1l9.526-5.5c.479-.276 1.254-.276 1.733 0l1.732 1c.478.276.478.724 0 1l-9.527 5.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M45.703 52c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.254-.276 1.732 0l12.99 7.5c.479.276.479.724 0 1L60.426 59.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeOpacity="0.3"
-                  d="M93.335 34.5c-.478-.276-.478-.724 0-1l6.062-3.5c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1l-6.062 3.5c-.478.276-1.254.276-1.732 0zM77.746 43.5c-.478-.276-.478-.724 0-1L89.004 36c.478-.276 1.254-.276 1.732 0l1.732 1c.479.276.479.724 0 1L81.21 44.5c-.478.276-1.254.276-1.732 0z"
-                />
-              </g>
-            </svg>
-            <div className="text-left text-sm sm:text-base xl:flex-1">
-              <p className="font-bold tracking-tight">UI Blocks</p>
-              <p className="mt-2 text-muted-foreground max-xl:hidden">Over 500+ professionally designed, fully responsive, expertly crafted components.</p>
+    <section className="bg-[#faf6f1] text-[#5b4636] py-20">
+      <div className="mx-auto max-w-7xl px-6">
+        <header className="max-w-3xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-amber-900 drop-shadow-sm" style={{ fontFamily: "'Amatic SC', cursive" }}>
+            Rich in features, not in friction.
+          </h2>
+          <p className="mt-3 text-lg text-[#6b5748]">
+            Everything you need to journal comfortably, without the clutter.
+          </p>
+        </header>
+
+        <div className="mt-16 relative">
+          {/* Bear component positioned on the left */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
+            <BearAnim />
+          </div>
+
+          {/* Features grid with staggered layout */}
+          <div className="lg:ml-48 grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+            {/* Feature card 1 - Top left */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out lg:mt-0">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
+                <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 7h16M4 12h10M4 17h16" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">Simple Writing</h3>
+              <p className="mt-1.5 leading-relaxed text-[#6b5748]">
+                Clean, distraction-free interface that lets you focus on your thoughts.
+              </p>
             </div>
-          </button>
 
-          <div className="w-px bg-border"></div>
-
-          <button
-            className="group relative flex items-center justify-center gap-4 p-4 focus:not-data-focus:outline-none data-selected:text-foreground hover:text-foreground max-lg:flex-col sm:p-6"
-            id="headlessui-tabs-tab-:Rr8jkq:"
-            role="tab"
-            type="button"
-            aria-selected="false"
-            tabIndex={-1}
-            data-headlessui-state="hover"
-            aria-controls="headlessui-tabs-panel-:Rl8jkq:"
-            data-hover=""
-          >
-            <div className="absolute -inset-x-px inset-y-0 bg-foreground/5 not-group-data-selected:hidden"></div>
-            <svg
-              className="w-20 shrink-0 sm:w-30 *:data-lift:transition-transform *:data-lift:duration-300 group-hover:*:data-lift:-translate-y-0.5 group-data-selected:*:data-lift:translate-y-0"
-              aria-hidden="true"
-              fill="none"
-              viewBox="0 0 120 72"
-            >
-              <g data-lift="true">
-                <path
-                  shapeRendering="geometricPrecision"
-                  fill="currentColor"
-                  d="M56.066 6 8.435 33.5C7.478 34.053 7 34.776 7 35.5v3c0 .724.478 1.448 1.435 2L56.066 68c1.913 1.105 5.015 1.105 6.929 0l47.631-27.5c.957-.552 1.435-1.276 1.435-2v-3c0-.724-.479-1.447-1.435-2L62.995 6c-1.914-1.104-5.015-1.104-6.929 0"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  d="M112.09 35.496c-.001-.723-.479-1.447-1.435-2l-47.632-27.5c-1.913-1.104-5.015-1.104-6.928 0l-47.631 27.5c-.957.553-1.435 1.277-1.435 2m105.061 0c0 .724-.479 1.448-1.435 2l-47.632 27.5c-1.913 1.105-5.015 1.105-6.928 0l-47.631-27.5c-.957-.552-1.435-1.276-1.435-2m105.061 0v3c0 .724-.479 1.448-1.435 2l-47.632 27.5c-1.913 1.105-5.015 1.105-6.928 0l-47.631-27.5c-.957-.552-1.435-1.276-1.435-2v-3"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeOpacity="0.3"
-                  d="M11.062 35.996c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.253-.276 1.732 0l30.31 17.5c.479.277.479.724 0 1l-47.63 27.5c-.479.276-1.255.276-1.733 0zM45.703 55.996c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.254-.276 1.732 0l12.99 7.5c.479.276.479.724 0 1l-47.631 27.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <circle
-                  shapeRendering="geometricPrecision"
-                  cx="1.5"
-                  cy="1.5"
-                  r="1.5"
-                  fill="currentColor"
-                  transform="matrix(.86603 -.5 .86603 .5 16.258 35.496)"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  d="m22.32 33.496 3.464-2M56.961 13.496l3.465-2M49.168 17.996l4.33-2.5M42.24 21.996l3.463-2"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeOpacity="0.3"
-                  d="m41.373 38.496 23.383-13.5"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  d="m53.498 55.496 6.928-4M69.086 46.496l6.928-4M84.674 37.496l6.929-4"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeOpacity="0.3"
-                  d="m56.096 56.996 9.526-5.5M71.684 47.996l9.526-5.5M87.273 38.996l9.526-5.5M58.693 58.496l8.66-5M74.282 49.496l8.66-5M89.87 40.496l8.66-5M46.57 38.496l18.186-10.5"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="28"
-                  height="2"
-                  fill="currentColor"
-                  rx="0.5"
-                  transform="matrix(.86603 -.5 .86603 .5 33.579 34.496)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="32"
-                  height="2"
-                  fill="currentColor"
-                  rx="0.5"
-                  transform="matrix(.86603 -.5 .86603 .5 35.311 37.496)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="10"
-                  height="3"
-                  fill="currentColor"
-                  rx="1.5"
-                  transform="matrix(.86603 -.5 .86603 .5 48.301 39.996)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="10"
-                  height="3"
-                  fill="currentColor"
-                  fillOpacity="0.3"
-                  rx="1.5"
-                  transform="matrix(.86603 -.5 .86603 .5 58.693 33.996)"
-                />
-              </g>
-            </svg>
-            <div className="text-left text-sm sm:text-base xl:flex-1">
-              <p className="font-bold tracking-tight">Templates</p>
-              <p className="mt-2 text-muted-foreground max-xl:hidden">Visually-stunning, easy to customize site templates built with React and Next.js.</p>
+            {/* Feature card 2 - Top right, staggered down */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out lg:mt-8">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
+                <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">Daily Prompts</h3>
+              <p className="mt-1.5 leading-relaxed text-[#6b5748]">
+                Thoughtful prompts to inspire reflection and deeper thinking.
+              </p>
             </div>
-          </button>
 
-          <div className="w-px bg-border"></div>
-
-          <button
-            className="group relative flex items-center justify-center gap-4 p-4 focus:not-data-focus:outline-none data-selected:text-foreground hover:text-foreground max-lg:flex-col sm:p-6"
-            id="headlessui-tabs-tab-:R1b8jkq:"
-            role="tab"
-            type="button"
-            aria-selected="false"
-            tabIndex={-1}
-            data-headlessui-state=""
-            aria-controls="headlessui-tabs-panel-:Rt8jkq:"
-          >
-            <div className="absolute -inset-x-px inset-y-0 bg-foreground/5 not-group-data-selected:hidden"></div>
-            <svg
-              className="w-20 shrink-0 sm:w-30 *:data-lift:transition-transform *:data-lift:duration-300 group-hover:*:data-lift:-translate-y-0.5 group-data-selected:*:data-lift:translate-y-0"
-              aria-hidden="true"
-              fill="none"
-              viewBox="0 0 120 72"
-            >
-              <path
-                className="fill-foreground"
-                d="M56.095 6 8.464 33.5c-.957.553-1.435 1.276-1.435 2v3c0 .724.478 1.448 1.435 2L56.095 68c1.913 1.105 5.015 1.105 6.928 0l47.632-27.5c.956-.552 1.435-1.276 1.435-2v-3c-.001-.724-.479-1.447-1.435-2L63.023 6c-1.913-1.104-5.015-1.104-6.928 0"
-              />
-              <g stroke="currentColor" opacity="0.1">
-                <path
-                  fill="currentColor"
-                  d="M60.425 52.5c-.478-.276-.478-.724 0-1L87.272 36c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1L63.89 53.5c-.478.276-1.253.276-1.732 0zM54.363 49c-.956-.552-.956-1.448 0-2l3.464-2c.957-.552 2.508-.552 3.464 0 .957.552.957 1.448 0 2l-3.464 2c-.956.552-2.507.552-3.464 0Z"
-                />
-                <path strokeLinecap="round" d="m63.89 43.5 12.124-7" />
-                <path
-                  fill="currentColor"
-                  d="M46.57 44.5c-.48-.276-.48-.724 0-1L73.415 28c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1L50.033 45.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <path strokeLinecap="round" d="m43.105 42.5 10.392-6" />
-                <path
-                  fill="currentColor"
-                  d="M37.043 39c-.478-.276-.478-.724 0-1L63.89 22.5c.478-.276 1.253-.276 1.732 0l1.732 1c.478.276.478.724 0 1L40.507 40c-.478.276-1.254.276-1.732 0z"
-                />
-                <path strokeLinecap="round" d="m33.579 37 10.392-6" />
-              </g>
-              <path
-                stroke="currentColor"
-                strokeOpacity="0.4"
-                d="M112.09 35.5c-.001-.724-.479-1.447-1.435-2L63.023 6c-1.913-1.104-5.015-1.104-6.928 0L8.464 33.5c-.957.553-1.435 1.276-1.435 2m105.061 0c0 .724-.479 1.448-1.435 2L63.023 65c-1.913 1.105-5.015 1.105-6.928 0L8.464 37.5c-.957-.552-1.435-1.276-1.435-2m105.061 0v3c0 .724-.479 1.448-1.435 2L63.023 68c-1.913 1.105-5.015 1.105-6.928 0L8.464 40.5c-.957-.552-1.435-1.276-1.435-2v-3"
-              />
-              <path
-                stroke="currentColor"
-                strokeOpacity="0.4"
-                d="M17.99 40c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.254-.276 1.732 0L108.057 35c.478.276.478.724 0 1L60.426 63.5c-.479.276-1.254.276-1.732 0z"
-              />
-              <path
-                fill="currentColor"
-                stroke="currentColor"
-                d="M11.062 36c-.478-.276-.478-.724 0-1L58.694 7.5c.478-.276 1.253-.276 1.732 0L63.024 9c.478.276.478.724 0 1L15.392 37.5c-.478.276-1.253.276-1.732 0z"
-                opacity="0.1"
-              />
-              <g data-lift="true">
-                <path
-                  className="fill-foreground"
-                  fillOpacity="0.3"
-                  stroke="currentColor"
-                  d="M60.425 47.5c-.478-.276-.478-.724 0-1L87.272 31c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1L63.89 48.5c-.478.276-1.253.276-1.732 0zM54.363 44c-.956-.552-.956-1.448 0-2l3.464-2c.957-.552 2.508-.552 3.464 0 .957.552.957 1.448 0 2l-3.464 2c-.956.552-2.507.552-3.464 0Z"
-                />
-                <circle
-                  cx="2"
-                  cy="2"
-                  r="2"
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  transform="matrix(.86603 -.5 .86603 .5 56.095 41)"
-                />
-                <path stroke="currentColor" strokeLinecap="round" d="m63.89 38.5 12.124-7" />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M46.57 39.5c-.48-.276-.48-.724 0-1L73.415 23c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1L50.033 40.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <path stroke="currentColor" strokeLinecap="round" d="m43.105 37.5 10.392-6" />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M37.043 34c-.478-.276-.478-.724 0-1L63.89 17.5c.478-.276 1.253-.276 1.732 0l1.732 1c.478.276.478.724 0 1L40.507 35c-.478.276-1.254.276-1.732 0z"
-                />
-                <path stroke="currentColor" strokeLinecap="round" d="m33.579 32 10.392-6" />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M11.062 31c-.478-.276-.478-.724 0-1L58.694 2.5c.478-.276 1.253-.276 1.732 0L63.024 4c.478.276.478.724 0 1L15.392 32.5c-.478.276-1.253.276-1.732 0z"
-                />
-              </g>
-            </svg>
-            <div className="text-left text-sm sm:text-base xl:flex-1">
-              <p className="font-bold tracking-tight">UI Kit</p>
-              <p className="mt-2 text-muted-foreground max-xl:hidden">A starter kit for building your own component systems with React and Tailwind CSS.</p>
+            {/* Feature card 3 - Far right, top aligned */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out lg:mt-0 xl:block hidden">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
+                <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">Private & Secure</h3>
+              <p className="mt-1.5 leading-relaxed text-[#6b5748]">
+                Your thoughts stay yours. End-to-end encryption keeps entries private.
+              </p>
             </div>
-          </button>
-        </div>
-        <div
-          className="line-y grid grid-cols-[1fr_1px_1fr_1px_1fr]" role="tablist" aria-orientation="horizontal">
 
-          <button
-            className="group relative flex items-center justify-center gap-4 p-4 focus:not-data-focus:outline-none data-selected:text-foreground hover:text-foreground max-lg:flex-col sm:p-6"
-            id="headlessui-tabs-tab-:Rr8jkq:"
-            role="tab"
-            type="button"
-            aria-selected="false"
-            tabIndex={-1}
-            data-headlessui-state="hover"
-            aria-controls="headlessui-tabs-panel-:Rl8jkq:"
-            data-hover=""
-          >
-            <div className="absolute -inset-x-px inset-y-0 bg-foreground/5 not-group-data-selected:hidden"></div>
-            <svg
-              className="w-20 shrink-0 sm:w-30 *:data-lift:transition-transform *:data-lift:duration-300 group-hover:*:data-lift:-translate-y-0.5 group-data-selected:*:data-lift:translate-y-0"
-              aria-hidden="true"
-              fill="none"
-              viewBox="0 0 120 72"
-            >
-              <g data-lift="true">
-                <path
-                  shapeRendering="geometricPrecision"
-                  fill="currentColor"
-                  d="M56.066 6 8.435 33.5C7.478 34.053 7 34.776 7 35.5v3c0 .724.478 1.448 1.435 2L56.066 68c1.913 1.105 5.015 1.105 6.929 0l47.631-27.5c.957-.552 1.435-1.276 1.435-2v-3c0-.724-.479-1.447-1.435-2L62.995 6c-1.914-1.104-5.015-1.104-6.929 0"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  d="M112.09 35.496c-.001-.723-.479-1.447-1.435-2l-47.632-27.5c-1.913-1.104-5.015-1.104-6.928 0l-47.631 27.5c-.957.553-1.435 1.277-1.435 2m105.061 0c0 .724-.479 1.448-1.435 2l-47.632 27.5c-1.913 1.105-5.015 1.105-6.928 0l-47.631-27.5c-.957-.552-1.435-1.276-1.435-2m105.061 0v3c0 .724-.479 1.448-1.435 2l-47.632 27.5c-1.913 1.105-5.015 1.105-6.928 0l-47.631-27.5c-.957-.552-1.435-1.276-1.435-2v-3"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeOpacity="0.3"
-                  d="M11.062 35.996c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.253-.276 1.732 0l30.31 17.5c.479.277.479.724 0 1l-47.63 27.5c-.479.276-1.255.276-1.733 0zM45.703 55.996c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.254-.276 1.732 0l12.99 7.5c.479.276.479.724 0 1l-47.631 27.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <circle
-                  shapeRendering="geometricPrecision"
-                  cx="1.5"
-                  cy="1.5"
-                  r="1.5"
-                  fill="currentColor"
-                  transform="matrix(.86603 -.5 .86603 .5 16.258 35.496)"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  d="m22.32 33.496 3.464-2M56.961 13.496l3.465-2M49.168 17.996l4.33-2.5M42.24 21.996l3.463-2"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeOpacity="0.3"
-                  d="m41.373 38.496 23.383-13.5"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  d="m53.498 55.496 6.928-4M69.086 46.496l6.928-4M84.674 37.496l6.929-4"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeOpacity="0.3"
-                  d="m56.096 56.996 9.526-5.5M71.684 47.996l9.526-5.5M87.273 38.996l9.526-5.5M58.693 58.496l8.66-5M74.282 49.496l8.66-5M89.87 40.496l8.66-5M46.57 38.496l18.186-10.5"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="28"
-                  height="2"
-                  fill="currentColor"
-                  rx="0.5"
-                  transform="matrix(.86603 -.5 .86603 .5 33.579 34.496)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="32"
-                  height="2"
-                  fill="currentColor"
-                  rx="0.5"
-                  transform="matrix(.86603 -.5 .86603 .5 35.311 37.496)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="10"
-                  height="3"
-                  fill="currentColor"
-                  rx="1.5"
-                  transform="matrix(.86603 -.5 .86603 .5 48.301 39.996)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="10"
-                  height="3"
-                  fill="currentColor"
-                  fillOpacity="0.3"
-                  rx="1.5"
-                  transform="matrix(.86603 -.5 .86603 .5 58.693 33.996)"
-                />
-              </g>
-            </svg>
-            <div className="text-left text-sm sm:text-base xl:flex-1">
-              <p className="font-bold tracking-tight">Templates</p>
-              <p className="mt-2 text-muted-foreground max-xl:hidden">Visually-stunning, easy to customize site templates built with React and Next.js.</p>
+            {/* Feature card 4 - Middle left, staggered */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out lg:mt-12">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
+                <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">Timeline View</h3>
+              <p className="mt-1.5 leading-relaxed text-[#6b5748]">
+                Visualize your journey with beautiful timeline layouts and milestones.
+              </p>
             </div>
-          </button>
 
-          <div className="w-px bg-border"></div>
-
-          <button
-            className="group relative flex items-center justify-center gap-4 p-4 focus:not-data-focus:outline-none data-selected:text-foreground hover:text-foreground max-lg:flex-col sm:p-6"
-            id="headlessui-tabs-tab-:R1b8jkq:"
-            role="tab"
-            type="button"
-            aria-selected="false"
-            tabIndex={-1}
-            data-headlessui-state=""
-            aria-controls="headlessui-tabs-panel-:Rt8jkq:"
-          >
-            <div className="absolute -inset-x-px inset-y-0 bg-foreground/5 not-group-data-selected:hidden"></div>
-            <svg
-              className="w-20 shrink-0 sm:w-30 *:data-lift:transition-transform *:data-lift:duration-300 group-hover:*:data-lift:-translate-y-0.5 group-data-selected:*:data-lift:translate-y-0"
-              aria-hidden="true"
-              fill="none"
-              viewBox="0 0 120 72"
-            >
-              <path
-                className="fill-foreground"
-                d="M56.095 6 8.464 33.5c-.957.553-1.435 1.276-1.435 2v3c0 .724.478 1.448 1.435 2L56.095 68c1.913 1.105 5.015 1.105 6.928 0l47.632-27.5c.956-.552 1.435-1.276 1.435-2v-3c-.001-.724-.479-1.447-1.435-2L63.023 6c-1.913-1.104-5.015-1.104-6.928 0"
-              />
-              <g stroke="currentColor" opacity="0.1">
-                <path
-                  fill="currentColor"
-                  d="M60.425 52.5c-.478-.276-.478-.724 0-1L87.272 36c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1L63.89 53.5c-.478.276-1.253.276-1.732 0zM54.363 49c-.956-.552-.956-1.448 0-2l3.464-2c.957-.552 2.508-.552 3.464 0 .957.552.957 1.448 0 2l-3.464 2c-.956.552-2.507.552-3.464 0Z"
-                />
-                <path strokeLinecap="round" d="m63.89 43.5 12.124-7" />
-                <path
-                  fill="currentColor"
-                  d="M46.57 44.5c-.48-.276-.48-.724 0-1L73.415 28c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1L50.033 45.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <path strokeLinecap="round" d="m43.105 42.5 10.392-6" />
-                <path
-                  fill="currentColor"
-                  d="M37.043 39c-.478-.276-.478-.724 0-1L63.89 22.5c.478-.276 1.253-.276 1.732 0l1.732 1c.478.276.478.724 0 1L40.507 40c-.478.276-1.254.276-1.732 0z"
-                />
-                <path strokeLinecap="round" d="m33.579 37 10.392-6" />
-              </g>
-              <path
-                stroke="currentColor"
-                strokeOpacity="0.4"
-                d="M112.09 35.5c-.001-.724-.479-1.447-1.435-2L63.023 6c-1.913-1.104-5.015-1.104-6.928 0L8.464 33.5c-.957.553-1.435 1.276-1.435 2m105.061 0c0 .724-.479 1.448-1.435 2L63.023 65c-1.913 1.105-5.015 1.105-6.928 0L8.464 37.5c-.957-.552-1.435-1.276-1.435-2m105.061 0v3c0 .724-.479 1.448-1.435 2L63.023 68c-1.913 1.105-5.015 1.105-6.928 0L8.464 40.5c-.957-.552-1.435-1.276-1.435-2v-3"
-              />
-              <path
-                stroke="currentColor"
-                strokeOpacity="0.4"
-                d="M17.99 40c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.254-.276 1.732 0L108.057 35c.478.276.478.724 0 1L60.426 63.5c-.479.276-1.254.276-1.732 0z"
-              />
-              <path
-                fill="currentColor"
-                stroke="currentColor"
-                d="M11.062 36c-.478-.276-.478-.724 0-1L58.694 7.5c.478-.276 1.253-.276 1.732 0L63.024 9c.478.276.478.724 0 1L15.392 37.5c-.478.276-1.253.276-1.732 0z"
-                opacity="0.1"
-              />
-              <g data-lift="true">
-                <path
-                  className="fill-foreground"
-                  fillOpacity="0.3"
-                  stroke="currentColor"
-                  d="M60.425 47.5c-.478-.276-.478-.724 0-1L87.272 31c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1L63.89 48.5c-.478.276-1.253.276-1.732 0zM54.363 44c-.956-.552-.956-1.448 0-2l3.464-2c.957-.552 2.508-.552 3.464 0 .957.552.957 1.448 0 2l-3.464 2c-.956.552-2.507.552-3.464 0Z"
-                />
-                <circle
-                  cx="2"
-                  cy="2"
-                  r="2"
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  transform="matrix(.86603 -.5 .86603 .5 56.095 41)"
-                />
-                <path stroke="currentColor" strokeLinecap="round" d="m63.89 38.5 12.124-7" />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M46.57 39.5c-.48-.276-.48-.724 0-1L73.415 23c.478-.276 1.254-.276 1.732 0l1.732 1c.478.276.478.724 0 1L50.033 40.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <path stroke="currentColor" strokeLinecap="round" d="m43.105 37.5 10.392-6" />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M37.043 34c-.478-.276-.478-.724 0-1L63.89 17.5c.478-.276 1.253-.276 1.732 0l1.732 1c.478.276.478.724 0 1L40.507 35c-.478.276-1.254.276-1.732 0z"
-                />
-                <path stroke="currentColor" strokeLinecap="round" d="m33.579 32 10.392-6" />
-                <path
-                  className="fill-foreground"
-                  stroke="currentColor"
-                  d="M11.062 31c-.478-.276-.478-.724 0-1L58.694 2.5c.478-.276 1.253-.276 1.732 0L63.024 4c.478.276.478.724 0 1L15.392 32.5c-.478.276-1.253.276-1.732 0z"
-                />
-              </g>
-            </svg>
-            <div className="text-left text-sm sm:text-base xl:flex-1">
-              <p className="font-bold tracking-tight">UI Kit</p>
-              <p className="mt-2 text-muted-foreground max-xl:hidden">A starter kit for building your own component systems with React and Tailwind CSS.</p>
+            {/* Feature card 5 - Middle right */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out lg:mt-16">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
+                <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" strokeLinecap="round" />
+                  <polyline points="3.27,6.96 12,12.01 20.73,6.96" strokeLinecap="round" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">Smart Search</h3>
+              <p className="mt-1.5 leading-relaxed text-[#6b5748]">
+                Find any entry instantly with powerful search across all your content.
+              </p>
             </div>
-          </button>
-        </div>
 
-        <div className="line-y grid grid-cols-[1fr_1px_1fr_1px_1fr]" role="tablist" aria-orientation="horizontal">
-
-          <button
-            className="group relative flex items-center justify-center gap-4 p-4 focus:not-data-focus:outline-none data-selected:text-foreground hover:text-foreground max-lg:flex-col sm:p-6"
-            id="headlessui-tabs-tab-:Rr8jkq:"
-            role="tab"
-            type="button"
-            aria-selected="false"
-            tabIndex={-1}
-            data-headlessui-state="hover"
-            aria-controls="headlessui-tabs-panel-:Rl8jkq:"
-            data-hover=""
-          >
-            <div className="absolute -inset-x-px inset-y-0 bg-foreground/5 not-group-data-selected:hidden"></div>
-            <svg
-              className="w-20 shrink-0 sm:w-30 *:data-lift:transition-transform *:data-lift:duration-300 group-hover:*:data-lift:-translate-y-0.5 group-data-selected:*:data-lift:translate-y-0"
-              aria-hidden="true"
-              fill="none"
-              viewBox="0 0 120 72"
-            >
-              <g data-lift="true">
-                <path
-                  shapeRendering="geometricPrecision"
-                  fill="currentColor"
-                  d="M56.066 6 8.435 33.5C7.478 34.053 7 34.776 7 35.5v3c0 .724.478 1.448 1.435 2L56.066 68c1.913 1.105 5.015 1.105 6.929 0l47.631-27.5c.957-.552 1.435-1.276 1.435-2v-3c0-.724-.479-1.447-1.435-2L62.995 6c-1.914-1.104-5.015-1.104-6.929 0"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  d="M112.09 35.496c-.001-.723-.479-1.447-1.435-2l-47.632-27.5c-1.913-1.104-5.015-1.104-6.928 0l-47.631 27.5c-.957.553-1.435 1.277-1.435 2m105.061 0c0 .724-.479 1.448-1.435 2l-47.632 27.5c-1.913 1.105-5.015 1.105-6.928 0l-47.631-27.5c-.957-.552-1.435-1.276-1.435-2m105.061 0v3c0 .724-.479 1.448-1.435 2l-47.632 27.5c-1.913 1.105-5.015 1.105-6.928 0l-47.631-27.5c-.957-.552-1.435-1.276-1.435-2v-3"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeOpacity="0.3"
-                  d="M11.062 35.996c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.253-.276 1.732 0l30.31 17.5c.479.277.479.724 0 1l-47.63 27.5c-.479.276-1.255.276-1.733 0zM45.703 55.996c-.478-.276-.478-.724 0-1l47.632-27.5c.478-.276 1.254-.276 1.732 0l12.99 7.5c.479.276.479.724 0 1l-47.631 27.5c-.478.276-1.254.276-1.732 0z"
-                />
-                <circle
-                  shapeRendering="geometricPrecision"
-                  cx="1.5"
-                  cy="1.5"
-                  r="1.5"
-                  fill="currentColor"
-                  transform="matrix(.86603 -.5 .86603 .5 16.258 35.496)"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  d="m22.32 33.496 3.464-2M56.961 13.496l3.465-2M49.168 17.996l4.33-2.5M42.24 21.996l3.463-2"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeOpacity="0.3"
-                  d="m41.373 38.496 23.383-13.5"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  d="m53.498 55.496 6.928-4M69.086 46.496l6.928-4M84.674 37.496l6.929-4"
-                />
-                <path
-                  shapeRendering="geometricPrecision"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeOpacity="0.3"
-                  d="m56.096 56.996 9.526-5.5M71.684 47.996l9.526-5.5M87.273 38.996l9.526-5.5M58.693 58.496l8.66-5M74.282 49.496l8.66-5M89.87 40.496l8.66-5M46.57 38.496l18.186-10.5"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="28"
-                  height="2"
-                  fill="currentColor"
-                  rx="0.5"
-                  transform="matrix(.86603 -.5 .86603 .5 33.579 34.496)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="32"
-                  height="2"
-                  fill="currentColor"
-                  rx="0.5"
-                  transform="matrix(.86603 -.5 .86603 .5 35.311 37.496)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="10"
-                  height="3"
-                  fill="currentColor"
-                  rx="1.5"
-                  transform="matrix(.86603 -.5 .86603 .5 48.301 39.996)"
-                />
-                <rect
-                  shapeRendering="geometricPrecision"
-                  width="10"
-                  height="3"
-                  fill="currentColor"
-                  fillOpacity="0.3"
-                  rx="1.5"
-                  transform="matrix(.86603 -.5 .86603 .5 58.693 33.996)"
-                />
-              </g>
-            </svg>
-            <div className="text-left text-sm sm:text-base xl:flex-1">
-              <p className="font-bold tracking-tight">Templates</p>
-              <p className="mt-2 text-muted-foreground max-xl:hidden">Visually-stunning, easy to customize site templates built with React and Next.js.</p>
+            {/* Feature card 6 - Far right, middle */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out lg:mt-8 xl:block hidden">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
+                <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 19l7-7 3 3-7 7-3-3z" strokeLinecap="round" />
+                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" strokeLinecap="round" />
+                  <path d="M2 2l7.586 7.586" strokeLinecap="round" />
+                  <circle cx="11" cy="11" r="2" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">Customizable</h3>
+              <p className="mt-1.5 leading-relaxed text-[#6b5748]">
+                Personalize your experience with themes, layouts, and writing preferences.
+              </p>
             </div>
-          </button>
+
+            {/* Additional cards for smaller screens - show the hidden ones */}
+            <div className="xl:hidden block">
+              <div className="group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
+                  <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">Private & Secure</h3>
+                <p className="mt-1.5 leading-relaxed text-[#6b5748]">
+                  Your thoughts stay yours. End-to-end encryption keeps entries private.
+                </p>
+              </div>
+            </div>
+
+            <div className="xl:hidden block">
+              <div className="group rounded-2xl bg-white/90 backdrop-blur-sm p-6 shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f5e6d3] text-[#b86a50] ring-1 ring-[#5b4636]/10">
+                  <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 19l7-7 3 3-7 7-3-3z" strokeLinecap="round" />
+                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" strokeLinecap="round" />
+                    <path d="M2 2l7.586 7.586" strokeLinecap="round" />
+                    <circle cx="11" cy="11" r="2" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-[#4b3a2d]">Customizable</h3>
+                <p className="mt-1.5 leading-relaxed text-[#6b5748]">
+                  Personalize your experience with themes, layouts, and writing preferences.
+                </p>
+              </div>
+            </div>
         </div>
       </div>
+      </div>
     </section>
-
-  )
+  );
 }

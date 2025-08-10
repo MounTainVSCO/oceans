@@ -1,5 +1,5 @@
 export { HeroSection } from './HeroSection';
-export { TimelinePreviewSection } from './TimelinePreviewSection';
+export { CozyMemoryBook } from './TimelinePreviewSection';
 export { AppPreviewSection } from './AppPreviewSection';
 export { FeaturesSection } from './FeaturesSection';
 export { StatsSection } from './StatsSection';

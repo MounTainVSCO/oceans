@@ -2,10 +2,10 @@ import { IsString, IsOptional, IsDateString } from 'class-validator';
 
 export class CreateMilestoneDto {
   @IsString()
-  title: string;
+  title!: string;
 
   @IsDateString()
-  date: string;
+  date!: string;
 
   @IsOptional()
   @IsString()

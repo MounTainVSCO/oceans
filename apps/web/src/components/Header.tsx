@@ -22,9 +22,9 @@ export const Header: React.FC = () => {
                 >
                   Timeline
                 </Link>
-                <Button 
-                  size="sm" 
-                  className="bg-gray-900 hover:bg-gray-800 text-white font-medium tracking-wide" 
+                <Button
+                  size="sm"
+                  className="bg-gray-900 hover:bg-gray-800 text-white font-medium tracking-wide"
                   asChild
                 >
                   <Link to="/dashboard">Add Milestone</Link>
@@ -34,13 +34,13 @@ export const Header: React.FC = () => {
               <>
                 <Link
                   to="/login"
-                  className="inline-flex scale-100 items-center justify-center rounded-sm text-sm font-medium ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 h-10 px-6"
+                  className="rounded-xl bg-[#d57a66] text-white font-semibold px-6 py-3 shadow-sm hover:bg-[#c76b58] hover:shadow-md transition-all duration-200"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="inline-flex scale-100 items-center justify-center rounded-sm text-sm font-medium ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 h-10 px-6"
+                  className="rounded-xl bg-[#f5e6d3] text-[#5b4636] font-semibold px-6 py-3 shadow-sm hover:bg-[#f0dcc3] transition-colors duration-200"
                 >
                   Get Started
                 </Link>

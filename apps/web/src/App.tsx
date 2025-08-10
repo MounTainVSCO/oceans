@@ -37,7 +37,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen" style={{ backgroundColor: '#faf9f5' }}>
             <Routes>
               {/* Public routes */}
               <Route path="/" element={<HomePage />} />

@@ -7,11 +7,9 @@ interface LogoProps {
 export const Logo: React.FC<LogoProps> = ({ className = '' }) => {
   return (
     <div className={`flex items-center ${className}`}>
-      <div className="w-8 h-8 bg-gray-900 rounded-sm mr-3 flex items-center justify-center">
-        <div className="w-3 h-3 border border-white rounded-sm" />
-      </div>
-      <span className="text-lg font-semibold text-gray-900 tracking-tight">
-        milestones
+        <img className="w-14 h-14" src="images/logo.png"></img>
+      <span className="text-3xl font-bold text-amber-800 tracking-tight" style={{ fontFamily: "'Amatic SC', cursive" }}>
+        Milestones
       </span>
     </div>
   );

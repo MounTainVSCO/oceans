@@ -2,7 +2,7 @@ import { Header } from '@/components/Header';
 import { FooterNew as Footer } from '@/components/FooterNew';
 import {
   HeroSection,
-  TimelinePreviewSection,
+  CozyMemoryBook,
   AppPreviewSection,
   FeaturesSection,
   StatsSection,
@@ -13,11 +13,11 @@ import {
 
 export function HomePage() {
   return (
-    <div className="bg-white">
+    <div style={{ backgroundColor: '#faf9f5' }}>
       <Header />
       <HeroSection />
       <FeaturesSection />
-      <TimelinePreviewSection />
+      <CozyMemoryBook />
       <AppPreviewSection />
       <StatsSection />
       <SocialProofSection />

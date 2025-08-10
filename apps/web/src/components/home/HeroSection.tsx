@@ -1,3 +1,5 @@
+import { DogAnimation } from './anim/dog';
+
 export function HeroSection() {
   return (
     <section id="hero" className="relative">
@@ -36,25 +38,26 @@ export function HeroSection() {
         className="absolute left-[calc(50%-4rem)] top-10 -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]"
       >
         <div
-          className="aspect-[1108/632] h-96 w-[69.25rem] bg-gradient-to-r from-[#6f8cbb] to-[#c93b37] opacity-40 dark:opacity-20"
+          className="aspect-[1108/632] h-96 w-[69.25rem] bg-gradient-to-r from-[#deac80] to-[#b5c18e] opacity-30 dark:opacity-15"
           style={{
             clipPath: "polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"
           }}
         />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 lg:flex lg:h-screen lg:items-center lg:px-12">
+      <div className="mx-auto max-w-7xl px-6 lg:flex lg:h-screen lg:items-center lg:justify-between lg:px-12 lg:min-w-max overflow-x-auto lg:gap-16">
         <div
-          className="mx-auto mt-32 max-w-3xl shrink-0 lg:mx-0 lg:mt-0 lg:max-w-xl lg:pt-8"
+          className="mx-auto mt-4 max-w-3xl shrink-0 lg:mx-0 lg:mt-0 lg:max-w-xl lg:h-full flex flex-col justify-center lg:flex-1"
           style={{ opacity: 1, transform: "none" }}
         >
           <div className="hidden items-center gap-x-4 sm:flex">
-            <div className="inline-flex items-center rounded-full border px-3 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 border-primary bg-primary text-primary-foreground">
+            <div className="inline-flex items-center rounded-full border px-3 py-0.5 text-sm font-light transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 border-amber-600 bg-amber-100 text-amber-800" style={{ fontFamily: "'Amatic SC', cursive" }}>
               Version 4
             </div>
             <a
               href="https://docs.rxresu.me/overview/features"
-              className="inline-flex scale-100 items-center justify-center rounded-sm text-sm font-medium ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-auto px-0 space-x-2 text-left"
+              className="inline-flex scale-100 items-center justify-center rounded-sm text-lg font-light ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 text-amber-700 underline-offset-4 hover:underline h-auto px-0 space-x-2 text-left"
+              style={{ fontFamily: "'Amatic SC', cursive" }}
             >
               <p>What's new in the latest version</p>
               <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256">
@@ -64,81 +67,36 @@ export function HeroSection() {
           </div>
 
           <div className="mt-10 space-y-2">
-            <h6 className="text-base font-bold tracking-wide">Finally,</h6>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+            <h6 className="text-3xl font-bold tracking-wide text-amber-800" style={{ fontFamily: "'Amatic SC', cursive" }}>Finally,</h6>
+            <h1 className="text-7xl font-bold tracking-tight sm:text-9xl text-amber-900 drop-shadow-sm" style={{ fontFamily: "'Amatic SC', cursive" }}>
               Track Your Life
             </h1>
           </div>
 
-          <p className="prose prose-base prose-zinc mt-6 text-lg leading-8 dark:prose-invert">
-            A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.
+          <p className="prose prose-base font-md tracking-md prose-amber mt-6 text-2xl leading-8 text-amber-800 dark:prose-invert" style={{ fontFamily: "'Amatic SC', cursive" }}>
+            A warm and intuitive platform that helps you document your life's journey, celebrate milestones, and reflect on your personal growth.
           </p>
 
           <div className="mt-10 flex items-center gap-x-8">
             <a
-              className="inline-flex scale-100 items-center justify-center rounded-sm text-sm font-medium ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 h-10 px-6"
+              className="inline-flex scale-100 items-center justify-center rounded-lg text-xl font-light ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 bg-amber-800 text-white hover:bg-amber-900 h-14 px-10 shadow-lg"
               href="/dashboard"
               data-discover="true"
+              style={{ fontFamily: "'Amatic SC', cursive" }}
             >
-              Go to dashboard
+              Start Your Journey
             </a>
-            <button className="inline-flex scale-100 items-center justify-center rounded-sm text-sm font-medium ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 bg-gray-800 text-white hover:bg-gray-800 h-10 px-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1em"
-                height="1em"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-                className="mr-3"
-              >
-                <path d="M120,216a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V40a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H56V208h56A8,8,0,0,1,120,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L204.69,120H112a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,229.66,122.34Z" />
-              </svg>
-              Logout
+            <button className="inline-flex scale-100 items-center justify-center rounded-lg text-xl font-light ring-offset-background transition-[transform,background-color] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 border-2 border-amber-800 text-amber-800 hover:bg-amber-50 h-14 px-10" style={{ fontFamily: "'Amatic SC', cursive" }}>
+              Learn More
             </button>
           </div>
         </div>
 
-        <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-20">
-          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
+        <div className="mx-auto mt-8 flex max-w-2xl sm:mt-12 lg:mt-0 lg:max-w-none lg:flex-1 lg:h-full min-w-0 flex-shrink-0 items-center justify-end lg:pl-8 xl:pl-16">
+          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none flex items-center justify-center lg:translate-x-8 xl:translate-x-16">
             <div style={{ opacity: 1, transform: "none" }}>
               <div style={{ transform: "perspective(1400px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)" }}>
-                <img
-                  width="3600"
-                  height="2078"
-                  src="/screenshots/builder.jpg"
-                  alt="Reactive Resume - Screenshot - Builder Screen"
-                  className="w-[76rem] rounded-lg bg-background/5 shadow-2xl ring-1 ring-foreground/10"
-                />
-                <div
-                  className="glare-wrapper"
-                  style={{
-                    position: "absolute",
-                    top: "0px",
-                    left: "0px",
-                    width: "100%",
-                    height: "100%",
-                    overflow: "hidden",
-                    borderRadius: "0px",
-                    maskImage: "-webkit-radial-gradient(white, black)",
-                    pointerEvents: "none"
-                  }}
-                >
-                  <div
-                    className="glare"
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transformOrigin: "0% 0% 0px",
-                      pointerEvents: "none",
-                      width: "1404.59px",
-                      height: "1404.59px",
-                      transform: "rotate(0deg) translate(-50%, -50%)",
-                      opacity: 0,
-                      background: "linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(250, 250, 250) 100%)"
-                    }}
-                  />
-                </div>
+                <DogAnimation />
               </div>
             </div>
           </div>
