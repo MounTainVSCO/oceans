@@ -4,29 +4,30 @@ export function DogAnimation() {
             <style>{`
                 .container {
                     position: relative;
-                    width: 80vmax;
-                    height: 60vmax;
+                    width: min(400px, 50vw);
+                    height: min(300px, 40vh);
                     display: flex;
                     align-items: center;
-                    justify-content: space-between;
+                    justify-content: center;
+                    transform: scale(1.0) translateX(-20px);
+                    transform-origin: center;
                 }
                 
                 .dog-container {
                     position: relative;
-                    width: 23.5vmax;
-                    height: 23.5vmax;
+                    width: min(200px, 26vw);
+                    height: min(200px, 26vw);
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    transform: translateX(-10vmax);
                 }
                 
                 .calendar-container {
                     position: absolute;
-                    top: -10vmax;
-                    right: -20vmax;
-                    width: 18vmax;
-                    height: 20vmax;
+                    top: min(-120px, -15vw);
+                    right: min(-240px, -30vw);
+                    width: min(280px, 36vw);
+                    height: min(320px, 40vw);
                     background: rgba(255, 248, 240, 0.9);
                     backdrop-filter: blur(10px);
                     border-radius: 12px;
@@ -34,15 +35,15 @@ export function DogAnimation() {
                         0 10px 20px rgba(222, 172, 128, 0.3),
                         inset 0 1px 0 rgba(255, 255, 255, 0.6);
                     border: 2px solid rgba(222, 172, 128, 0.2);
-                    padding: 1vmax;
+                    padding: min(16px, 2vw);
                     z-index: -100;
                 }
                 
                 .calendar-title {
                     text-align: center;
-                    font-size: 1.2vmax;
+                    font-size: min(20px, 2.4vw);
                     color: #8b5a3c;
-                    margin-bottom: 0.8vmax;
+                    margin-bottom: min(12px, 1.6vw);
                     font-weight: bold;
                     text-shadow: 0 2px 4px rgba(139, 90, 60, 0.1);
                 }
@@ -50,16 +51,16 @@ export function DogAnimation() {
                 .calendar-grid {
                     display: grid;
                     grid-template-columns: repeat(7, 1fr);
-                    gap: 0.2vmax;
-                    margin-bottom: 0.8vmax;
+                    gap: min(4px, 0.4vw);
+                    margin-bottom: min(12px, 1.6vw);
                 }
                 
                 .calendar-header {
                     text-align: center;
-                    font-size: 0.7vmax;
+                    font-size: min(12px, 1.4vw);
                     color: #b5916b;
                     font-weight: bold;
-                    padding: 0.2vmax;
+                    padding: min(4px, 0.4vw);
                 }
                 
                 .calendar-day {
@@ -67,7 +68,7 @@ export function DogAnimation() {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 0.6vmax;
+                    font-size: min(10px, 1.2vw);
                     color: #8b5a3c;
                     border-radius: 4px;
                     transition: all 0.3s ease;
@@ -88,57 +89,57 @@ export function DogAnimation() {
                 .calendar-day.has-event::after {
                     content: "✨";
                     position: absolute;
-                    top: -0.1vmax;
-                    right: -0.1vmax;
-                    font-size: 0.6vmax;
+                    top: min(-2px, -0.2vw);
+                    right: min(-2px, -0.2vw);
+                    font-size: min(10px, 1.2vw);
                 }
                 
                 .events-section {
                     background: rgba(255, 255, 255, 0.6);
                     border-radius: 8px;
-                    padding: 0.8vmax;
-                    margin-top: 0.5vmax;
+                    padding: min(12px, 1.6vw);
+                    margin-top: min(8px, 1vw);
                 }
                 
                 .events-title {
-                    font-size: 0.9vmax;
+                    font-size: min(14px, 1.8vw);
                     color: #8b5a3c;
-                    margin-bottom: 0.5vmax;
+                    margin-bottom: min(8px, 1vw);
                     font-weight: bold;
                 }
                 
                 .milestone-item {
                     margin-bottom: 0;
-                    padding: 0.6vmax;
+                    padding: min(10px, 1.2vw);
                     background: rgba(244, 212, 167, 0.2);
                     border-radius: 6px;
                     border-left: 3px solid #deac80;
                 }
                 
                 .milestone-year {
-                    font-size: 1vmax;
+                    font-size: min(16px, 2vw);
                     font-weight: bold;
                     color: #8b5a3c;
-                    margin-bottom: 0.4vmax;
+                    margin-bottom: min(6px, 0.8vw);
                     text-align: center;
                     background: rgba(222, 172, 128, 0.3);
                     border-radius: 15px;
-                    padding: 0.2vmax 0.5vmax;
+                    padding: min(4px, 0.4vw) min(8px, 1vw);
                 }
                 
                 .milestone-events {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.3vmax;
+                    gap: min(4px, 0.6vw);
                 }
                 
                 .milestone-event {
                     display: flex;
                     align-items: center;
-                    padding: 0.3vmax 0.4vmax;
+                    padding: min(4px, 0.6vw) min(6px, 0.8vw);
                     background: rgba(255, 255, 255, 0.4);
                     border-radius: 5px;
-                    font-size: 0.7vmax;
+                    font-size: min(12px, 1.4vw);
                     color: #8b5a3c;
                     transition: all 0.3s ease;
                 }
@@ -149,22 +150,22 @@ export function DogAnimation() {
                 }
                 
                 .milestone-icon {
-                    margin-right: 0.4vmax;
-                    font-size: 0.8vmax;
+                    margin-right: min(6px, 0.8vw);
+                    font-size: min(12px, 1.6vw);
                 }
         
                 .leg {
                     position: absolute;
                     bottom: 0;
-                    width: 2vmax;
-                    height: 2.125vmax;
+                    width: min(16px, 2vw);
+                    height: min(17px, 2.125vw);
                 }
                 .paw {
                     position: absolute;
                     bottom: 2px;
                     left: 0;
-                    width: 1.95vmax;
-                    height: 1.8vmax;
+                    width: min(15px, 1.95vw);
+                    height: min(14px, 1.8vw);
                     overflow: hidden;
                 }
                 .paw::before {

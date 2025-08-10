@@ -375,11 +375,6 @@ export function CozyMemoryBook() {
             <h1 className="text-3xl font-bold text-stone-800 mb-2">Memory Book</h1>
             <p className="text-stone-600">2024 • A year to remember</p>
           </div>
-
-          {/* Cat in the middle with margin bottom */}
-          <div className="flex justify-center mb-16">
-            <CozyCat />
-          </div>
           
           {/* Memory Grid - Like an open book */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

@@ -1,57 +1,36 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Typography } from '@/components/ui/Typography';
-import { Button } from '@/components/Button';
+import { Link } from 'react-router-dom';
 import { DashboardLayout } from '@/components/DashboardLayout';
-import { MilestoneCard } from '@/components/milestones/MilestoneCard';
-import { AddMilestoneModal } from '@/components/milestones/AddMilestoneModal';
-import { StatsCard } from '@/components/StatsCard';
-
-// Mock data - replace with actual API calls
-const mockMilestones = [
-  {
-    id: 1,
-    title: "Started my first job at TechCorp",
-    date: "2024-01-15",
-    description: "Joined as a Software Engineer. Excited to begin this new chapter in my career journey.",
-    category: "career"
-  },
-  {
-    id: 2,
-    title: "Completed marathon training",
-    date: "2023-11-20",
-    description: "Successfully completed my 16-week marathon training program. Ready for the big race!",
-    category: "health"
-  },
-  {
-    id: 3,
-    title: "Published my first article",
-    date: "2023-09-10",
-    description: "Article on React performance optimization was published in TechBlog with 1000+ views.",
-    category: "creative"
-  }
-];
+import { Button } from '@/components/Button';
 
 interface Timeline {
   id: string;
   title: string;
-  description?: string;
+  description: string;
   isPublic: boolean;
   milestones: any[];
 }
 
 export function Main() {
-  const navigate = useNavigate();
-  const [milestones, setMilestones] = useState(mockMilestones);
   const [timelines, setTimelines] = useState<Timeline[]>([]);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [viewMode, setViewMode] = useState<'timeline' | 'grid'>('timeline');
+  const [showMilestoneModal, setShowMilestoneModal] = useState(false);
   const [newTimeline, setNewTimeline] = useState({
     title: '',
     description: '',
     isPublic: false
   });
+  const [newMilestone, setNewMilestone] = useState({
+    title: '',
+    description: '',
+    date: new Date().toISOString().split('T')[0],
+    category: 'personal',
+    importance: 5,
+    location: '',
+    tags: [] as string[],
+    mood: 'happy' as 'happy' | 'sad' | 'excited' | 'reflective' | 'proud' | 'grateful'
+  });
+  const [currentTag, setCurrentTag] = useState('');
 
   // Fetch user's timelines
   useEffect(() => {
@@ -71,11 +50,13 @@ export function Main() {
         setTimelines(data);
       }
     } catch (error) {
-      console.error('Failed to fetch timelines:', error);
+      console.error('Error fetching timelines:', error);
     }
   };
 
   const handleCreateTimeline = async () => {
+    if (!newTimeline.title.trim()) return;
+
     try {
       const response = await fetch('/api/timelines', {
         method: 'POST',
@@ -85,441 +66,495 @@ export function Main() {
         },
         body: JSON.stringify(newTimeline),
       });
-      
+
       if (response.ok) {
-        const createdTimeline = await response.json();
-        setTimelines(prev => [...prev, createdTimeline]);
+        const timeline = await response.json();
+        setTimelines([...timelines, timeline]);
         setNewTimeline({ title: '', description: '', isPublic: false });
         setShowCreateModal(false);
-        // Navigate to the new timeline editor
-        navigate(`/timeline/${createdTimeline.id}`);
       }
     } catch (error) {
-      console.error('Failed to create timeline:', error);
+      console.error('Error creating timeline:', error);
     }
   };
 
-  const handleAddMilestone = (newMilestone: any) => {
-    const milestone = {
-      ...newMilestone,
-      id: Date.now(), // In real app, this would come from the API
-    };
-    setMilestones([milestone, ...milestones]);
-    setIsAddModalOpen(false);
+  const handleCreateMilestone = async () => {
+    if (!newMilestone.title.trim()) return;
+
+    try {
+      // For now, just add to local state - replace with API call
+      const milestone = {
+        ...newMilestone,
+        id: Date.now(),
+        date: newMilestone.date
+      };
+      
+      // Add to milestones array (this would be an API call in real app)
+      console.log('Creating milestone:', milestone);
+      
+      // Reset form
+      setNewMilestone({
+        title: '',
+        description: '',
+        date: new Date().toISOString().split('T')[0],
+        category: 'personal',
+        importance: 5,
+        location: '',
+        tags: [],
+        mood: 'happy'
+      });
+      setShowMilestoneModal(false);
+    } catch (error) {
+      console.error('Error creating milestone:', error);
+    }
   };
 
-  const handleEditMilestone = (milestone: any) => {
-    // TODO: Implement edit functionality
-    console.log('Edit milestone:', milestone);
+  const addTag = (tag: string) => {
+    if (tag.trim() && !newMilestone.tags.includes(tag.trim())) {
+      setNewMilestone(prev => ({
+        ...prev,
+        tags: [...prev.tags, tag.trim()]
+      }));
+      setCurrentTag('');
+    }
   };
 
-  const handleDeleteMilestone = (id: number) => {
-    setMilestones(milestones.filter(m => m.id !== id));
+  const removeTag = (tagToRemove: string) => {
+    setNewMilestone(prev => ({
+      ...prev,
+      tags: prev.tags.filter(tag => tag !== tagToRemove)
+    }));
   };
-
-  const getStats = () => {
-    const currentYear = new Date().getFullYear();
-    const thisYearCount = milestones.filter(m => 
-      new Date(m.date).getFullYear() === currentYear
-    ).length;
-    
-    const categories = milestones.reduce((acc, m) => {
-      acc[m.category] = (acc[m.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    
-    const topCategory = Object.entries(categories).sort(([,a], [,b]) => b - a)[0];
-    
-    return {
-      total: milestones.length,
-      thisYear: thisYearCount,
-      topCategory: topCategory ? topCategory[0] : 'none',
-      categoryCount: Object.keys(categories).length
-    };
-  };
-
-  const stats = getStats();
 
   const EmptyState = () => (
-    <div className="flex flex-col items-center justify-center py-16 px-6">
-      <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mb-6">
-        <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-        </svg>
-      </div>
-      
-      <Typography variant="h3" className="mb-3 text-center text-amber-900 font-bold" style={{ fontFamily: "'Amatic SC', cursive", fontSize: '2.5rem' }}>
-        Start building your story
-      </Typography>
-      
-      <Typography variant="body" className="text-center max-w-md mb-8 text-amber-800 font-light" style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.5rem' }}>
-        Record the moments that matter. Create a timeline of your accomplishments, 
-        milestones, and turning points that shape who you are.
-      </Typography>
-      
-      <div className="flex gap-3 mb-8">
+    <div className="min-h-screen flex items-center justify-center px-6">
+      <div className="text-center max-w-2xl">
+        {/* Decorative illustration */}
+        <div className="mb-12 relative">
+          <div className="w-48 h-48 mx-auto bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center shadow-lg ring-1 ring-[#5b4636]/10">
+            <svg className="w-24 h-24 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </div>
+          {/* Floating decorative elements */}
+          <div className="absolute -top-4 -right-4 w-8 h-8 bg-amber-300 rounded-full animate-pulse"></div>
+          <div className="absolute -bottom-2 -left-6 w-6 h-6 bg-amber-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
+        
+        <h2 className="text-8xl font-bold tracking-tight text-[#4b3a2d] mb-8" style={{ fontFamily: "'Amatic SC', cursive" }}>
+          Welcome to Oceans
+        </h2>
+        
+        <p className="text-3xl text-[#6b5748] mb-16 leading-relaxed max-w-2xl mx-auto" style={{ fontFamily: "'Amatic SC', cursive" }}>
+          Create your first timeline and start documenting the important moments of your life
+        </p>
+        
         <Button 
           onClick={() => setShowCreateModal(true)}
           size="lg"
-          className="bg-amber-800 hover:bg-amber-900 text-white font-light"
-          style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.25rem' }}
+          className="bg-[#4b3a2d] hover:bg-[#3a2922] text-white text-3xl px-16 py-8 shadow-xl hover:-translate-y-1 transition-all duration-200 rounded-3xl"
+          style={{ fontFamily: "'Amatic SC', cursive" }}
         >
-          Create Timeline
+          <svg className="w-8 h-8 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Create Your Timeline
         </Button>
-        <Button 
-          onClick={() => setIsAddModalOpen(true)}
-          size="lg"
-          variant="outline"
-          className="border-amber-800 text-amber-800 hover:bg-amber-50 font-light"
-          style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.25rem' }}
-        >
-          Add Milestone
-        </Button>
-      </div>
-      
-      {/* Quick suggestions */}
-      <div className="w-full max-w-2xl">
-        <Typography variant="overline" className="text-center block mb-4 text-amber-700 font-light" style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.25rem' }}>
-          Need inspiration? Try adding:
-        </Typography>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {[
-            { category: 'career', title: 'Started new job', description: 'Career milestone' },
-            { category: 'learning', title: 'Completed course', description: 'Education achievement' },
-            { category: 'health', title: 'Fitness goal achieved', description: 'Health & wellness' },
-            { category: 'creative', title: 'Published work', description: 'Creative expression' },
-            { category: 'life', title: 'Moved to new city', description: 'Life transition' },
-            { category: 'relationships', title: 'Met someone special', description: 'Personal connection' }
-          ].map((suggestion, index) => (
-            <button
-              key={index}
-              onClick={() => setIsAddModalOpen(true)}
-              className="text-left p-4 border border-amber-200 rounded-lg hover:bg-amber-50 hover:border-amber-300 transition-colors group"
-            >
-              <div className="flex items-center justify-between mb-1">
-                <Typography variant="h4" className="text-base group-hover:text-amber-900 text-amber-800 font-light" style={{ fontFamily: "'Amatic SC', cursive" }}>
-                  {suggestion.title}
-                </Typography>
-                <span className="text-sm text-amber-600 capitalize font-light" style={{ fontFamily: "'Amatic SC', cursive" }}>{suggestion.category}</span>
-              </div>
-              <Typography variant="caption" className="text-amber-700 text-sm font-light" style={{ fontFamily: "'Amatic SC', cursive" }}>
-                {suggestion.description}
-              </Typography>
-            </button>
-          ))}
-        </div>
       </div>
     </div>
   );
 
-  const TimelineHeader = () => (
-    <div className="mb-8">
-      
-      {/* Timelines Section */}
-      {timelines.length > 0 && (
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <Typography variant="h3" className="text-amber-900 font-bold" style={{ fontFamily: "'Amatic SC', cursive", fontSize: '2rem' }}>
-              Your Timelines
-            </Typography>
-            <Button 
-              onClick={() => setShowCreateModal(true)}
-              variant="outline"
-              className="text-base border-amber-800 text-amber-800 hover:bg-amber-50 font-light"
-              style={{ fontFamily: "'Amatic SC', cursive" }}
-            >
-              Create New
-            </Button>
-          </div>
+  const DashboardContent = () => (
+    <div className="min-h-screen px-6 py-8">
+      <div className="mx-auto max-w-4xl">
+        {/* Welcome Header */}
+        <div className="mb-16 text-center">
+          <h1 className="text-8xl font-bold tracking-tight text-[#4b3a2d] mb-6" style={{ fontFamily: "'Amatic SC', cursive" }}>
+            Your Timelines
+          </h1>
+          <p className="text-3xl text-[#6b5748] max-w-3xl mx-auto leading-relaxed mb-8" style={{ fontFamily: "'Amatic SC', cursive" }}>
+            Create beautiful timelines to organize and share the important moments of your life
+          </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {timelines.map(timeline => (
-              <Link 
-                key={timeline.id} 
-                to={`/timeline/${timeline.id}`}
-                className="block p-4 border border-amber-200 rounded-lg hover:border-amber-300 hover:shadow-sm transition-all bg-white"
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-bold text-amber-900 truncate text-lg" style={{ fontFamily: "'Amatic SC', cursive" }}>{timeline.title}</h4>
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-light ${
-                    timeline.isPublic 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-amber-100 text-amber-800'
-                  }`} style={{ fontFamily: "'Amatic SC', cursive" }}>
-                    {timeline.isPublic ? 'Public' : 'Private'}
-                  </span>
-                </div>
-                {timeline.description && (
-                  <p className="text-base text-amber-700 mb-2 line-clamp-2 font-light" style={{ fontFamily: "'Amatic SC', cursive" }}>{timeline.description}</p>
-                )}
-                <div className="flex items-center text-sm text-amber-600 font-light" style={{ fontFamily: "'Amatic SC', cursive" }}>
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {timeline.milestones.length} milestone{timeline.milestones.length !== 1 ? 's' : ''}
-                </div>
-              </Link>
-            ))}
-          </div>
+          <Button 
+            onClick={() => setShowCreateModal(true)}
+            size="lg"
+            className="bg-[#4b3a2d] hover:bg-[#3a2922] text-white text-2xl px-12 py-6 shadow-lg hover:-translate-y-1 transition-all duration-200 rounded-2xl"
+            style={{ fontFamily: "'Amatic SC', cursive" }}
+          >
+            <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Create Your First Timeline
+          </Button>
         </div>
-      )}
 
-      {/* Header Controls */}
-      <div className="border-b border-amber-200 pb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <Typography variant="h2" className="mb-2 text-amber-900 font-bold" style={{ fontFamily: "'Amatic SC', cursive", fontSize: '3rem' }}>
-              Your Journey
-            </Typography>
-            <Typography variant="body" className="text-amber-700 font-light" style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.25rem' }}>
-              {milestones.length} {milestones.length === 1 ? 'milestone' : 'milestones'} recorded
-            </Typography>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <Button 
-              onClick={() => setShowCreateModal(true)}
-              variant="outline"
-              className="text-amber-800 hover:text-amber-900 border-amber-800 hover:bg-amber-50 font-light"
-              style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
-            >
-              Create Timeline
-            </Button>
+        {/* Timeline Section */}
+        {timelines.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-6xl font-bold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  Your Timelines
+                </h2>
+                <p className="text-2xl text-[#6b5748]" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  {timelines.length} {timelines.length === 1 ? 'timeline' : 'timelines'} created
+                </p>
+              </div>
+              <Button 
+                onClick={() => setShowCreateModal(true)}
+                variant="outline"
+                className="border-2 border-[#4b3a2d] text-[#4b3a2d] hover:bg-[#f5e6d3] text-xl px-8 py-4"
+                style={{ fontFamily: "'Amatic SC', cursive" }}
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Create New
+              </Button>
+            </div>
             
-            {timelines.length > 0 && (
-              <Link to={`/timeline/${timelines[0].id}`}>
-                <Button 
-                  variant="outline"
-                  className="text-amber-800 hover:text-amber-900 border-amber-800 hover:bg-amber-50 font-light"
-                  style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {timelines.map(timeline => (
+                <Link 
+                  key={timeline.id} 
+                  to={`/timeline/${timeline.id}`}
+                  className="group block bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-sm ring-1 ring-[#5b4636]/10 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
                 >
-                  Edit Timeline
-                </Button>
-              </Link>
-            )}
-            
-            <div className="flex items-center bg-amber-100 rounded-md p-1">
-              <button
-                onClick={() => setViewMode('timeline')}
-                className={`px-3 py-1.5 text-base font-light rounded transition-colors ${
-                  viewMode === 'timeline'
-                    ? 'bg-white text-amber-900 shadow-sm'
-                    : 'text-amber-700 hover:text-amber-900'
-                }`}
-                style={{ fontFamily: "'Amatic SC', cursive" }}
-              >
-                Timeline
-              </button>
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`px-3 py-1.5 text-base font-light rounded transition-colors ${
-                  viewMode === 'grid'
-                    ? 'bg-white text-amber-900 shadow-sm'
-                    : 'text-amber-700 hover:text-amber-900'
-                }`}
-                style={{ fontFamily: "'Amatic SC', cursive" }}
-              >
-                Grid
-              </button>
-            </div>
-            
-            <Button 
-              onClick={() => setIsAddModalOpen(true)}
-              className="bg-amber-800 hover:bg-amber-900 text-white font-light"
-              style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
-            >
-              Add milestone
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const TimelineView = () => {
-    const groupedByYear = milestones.reduce((acc, milestone) => {
-      const year = new Date(milestone.date).getFullYear();
-      if (!acc[year]) acc[year] = [];
-      acc[year].push(milestone);
-      return acc;
-    }, {} as Record<number, typeof milestones>);
-
-    const sortedYears = Object.keys(groupedByYear)
-      .map(Number)
-      .sort((a, b) => b - a);
-
-    return (
-      <div className="space-y-12">
-        {sortedYears.map(year => (
-          <div key={year} className="relative">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-amber-800 rounded-full flex items-center justify-center">
-                  <Typography variant="h4" className="text-white text-lg font-bold" style={{ fontFamily: "'Amatic SC', cursive" }}>
-                    {year.toString().slice(-2)}
-                  </Typography>
-                </div>
-              </div>
-              
-              <div className="flex-1">
-                <Typography variant="h3" className="text-amber-900 mb-1 font-bold" style={{ fontFamily: "'Amatic SC', cursive", fontSize: '2rem' }}>
-                  {year}
-                </Typography>
-                <Typography variant="caption" className="text-amber-700 font-light" style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}>
-                  {groupedByYear[year].length} milestone{groupedByYear[year].length !== 1 ? 's' : ''}
-                </Typography>
-              </div>
-              
-              <div className="h-px bg-amber-200 flex-1" />
-            </div>
-            
-            <div className="space-y-6 relative pl-16">
-              {/* Timeline line */}
-              <div className="absolute left-6 top-0 bottom-0 w-px bg-amber-200" />
-              
-              {groupedByYear[year]
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-                .map((milestone) => (
-                  <div key={milestone.id} className="relative">
-                    <MilestoneCard
-                      milestone={milestone}
-                      onEdit={handleEditMilestone}
-                      onDelete={handleDeleteMilestone}
-                    />
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-2xl font-bold text-amber-900 truncate group-hover:text-amber-800" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                      {timeline.title}
+                    </h3>
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                      timeline.isPublic 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-amber-100 text-amber-800'
+                    }`} style={{ fontFamily: "'Amatic SC', cursive" }}>
+                      {timeline.isPublic ? 'Public' : 'Private'}
+                    </span>
                   </div>
-                ))}
+                  {timeline.description && (
+                    <p className="text-lg text-amber-700 mb-4 line-clamp-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                      {timeline.description}
+                    </p>
+                  )}
+                  <div className="flex items-center text-amber-600" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {timeline.milestones.length} milestone{timeline.milestones.length !== 1 ? 's' : ''}
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
-        ))}
+        )}
       </div>
-    );
-  };
-
-  const GridView = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {milestones
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        .map(milestone => (
-          <MilestoneCard
-            key={milestone.id}
-            milestone={milestone}
-            onEdit={handleEditMilestone}
-            onDelete={handleDeleteMilestone}
-          />
-        ))}
     </div>
   );
 
   return (
     <DashboardLayout>
-      <div className="h-screen flex flex-col" style={{ backgroundColor: '#faf9f5' }}>
-        <div className="max-w-4xl mx-auto px-6 py-8 flex-1 flex flex-col min-h-0">
-          {milestones.length === 0 ? (
-            <div className="flex-1 flex items-center justify-center">
-              <EmptyState />
+      {timelines.length === 0 ? <EmptyState /> : <DashboardContent />}
+      
+      {/* Create Timeline Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 w-full max-w-md border border-[#5b4636]/10 shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-3xl font-bold text-amber-900" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                Create Timeline
+              </h2>
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className="w-10 h-10 bg-amber-100 hover:bg-amber-200 rounded-xl flex items-center justify-center transition-colors duration-200"
+              >
+                <svg className="w-5 h-5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
-          ) : (
-            <>
-              <div className="flex-shrink-0">
-                <TimelineHeader />
+
+            <div className="space-y-6">
+              <div>
+                <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  Timeline Title
+                </label>
+                <input
+                  type="text"
+                  value={newTimeline.title}
+                  onChange={(e) => setNewTimeline(prev => ({...prev, title: e.target.value}))}
+                  className="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d]"
+                  placeholder="My Amazing Journey"
+                  style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
+                />
               </div>
-              <div className="flex-1 overflow-y-auto min-h-0">
-                {viewMode === 'timeline' ? <TimelineView /> : <GridView />}
+
+              <div>
+                <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  Description
+                </label>
+                <textarea
+                  value={newTimeline.description}
+                  onChange={(e) => setNewTimeline(prev => ({...prev, description: e.target.value}))}
+                  rows={3}
+                  className="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d] resize-none"
+                  placeholder="A collection of my most important milestones and achievements"
+                  style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
+                />
               </div>
-            </>
-          )}
+
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="isPublic"
+                  checked={newTimeline.isPublic}
+                  onChange={(e) => setNewTimeline(prev => ({...prev, isPublic: e.target.checked}))}
+                  className="h-5 w-5 text-amber-600 focus:ring-amber-500 border-amber-300 rounded"
+                />
+                <label htmlFor="isPublic" className="ml-3 text-lg text-[#4b3a2d]" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  Make timeline public
+                </label>
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-8">
+              <Button
+                onClick={() => setShowCreateModal(false)}
+                variant="outline"
+                className="flex-1 border-2 border-amber-200 text-amber-800 hover:bg-amber-50 text-lg py-3"
+                style={{ fontFamily: "'Amatic SC', cursive" }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleCreateTimeline}
+                className="flex-1 bg-amber-800 hover:bg-amber-900 text-white text-lg py-3 shadow-lg"
+                disabled={!newTimeline.title.trim()}
+                style={{ fontFamily: "'Amatic SC', cursive" }}
+              >
+                Create Timeline
+              </Button>
+            </div>
+          </div>
         </div>
-        
-        {isAddModalOpen && (
-          <AddMilestoneModal
-            isOpen={isAddModalOpen}
-            onClose={() => setIsAddModalOpen(false)}
-            onSave={handleAddMilestone}
-          />
-        )}
+      )}
 
-        {/* Create Timeline Modal */}
-        {showCreateModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 border border-amber-200">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-2xl font-bold text-amber-900" style={{ fontFamily: "'Amatic SC', cursive" }}>Create New Timeline</h3>
-                <button
-                  onClick={() => setShowCreateModal(false)}
-                  className="text-amber-400 hover:text-amber-600"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+      {/* Create Milestone Modal */}
+      {showMilestoneModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 w-full max-w-2xl border border-[#5b4636]/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-3xl font-bold text-amber-900" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                Add Life Moment
+              </h2>
+              <button
+                onClick={() => setShowMilestoneModal(false)}
+                className="w-10 h-10 bg-amber-100 hover:bg-amber-200 rounded-xl flex items-center justify-center transition-colors duration-200"
+              >
+                <svg className="w-5 h-5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {/* Title */}
+              <div>
+                <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  What happened?
+                </label>
+                <input
+                  type="text"
+                  value={newMilestone.title}
+                  onChange={(e) => setNewMilestone(prev => ({...prev, title: e.target.value}))}
+                  className="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d]"
+                  placeholder="Started my first job, Graduated college, Moved to NYC..."
+                  style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
+                />
               </div>
 
-              <div className="space-y-4">
+              {/* Date and Location */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-light text-amber-800 mb-1" style={{ fontFamily: "'Amatic SC', cursive" }}>
-                    Timeline Title *
+                  <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                    When?
+                  </label>
+                  <input
+                    type="date"
+                    value={newMilestone.date}
+                    onChange={(e) => setNewMilestone(prev => ({...prev, date: e.target.value}))}
+                    className="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d]"
+                    style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
+                  />
+                </div>
+                <div>
+                  <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                    Where?
                   </label>
                   <input
                     type="text"
-                    value={newTimeline.title}
-                    onChange={(e) => setNewTimeline(prev => ({...prev, title: e.target.value}))}
-                    className="w-full px-3 py-2 border border-amber-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-500 font-light"
-                    placeholder="My Life Journey"
+                    value={newMilestone.location}
+                    onChange={(e) => setNewMilestone(prev => ({...prev, location: e.target.value}))}
+                    className="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d]"
+                    placeholder="San Francisco, Home, Office..."
                     style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
                   />
-                </div>
-
-                <div>
-                  <label className="block text-base font-light text-amber-800 mb-1" style={{ fontFamily: "'Amatic SC', cursive" }}>
-                    Description
-                  </label>
-                  <textarea
-                    value={newTimeline.description}
-                    onChange={(e) => setNewTimeline(prev => ({...prev, description: e.target.value}))}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-amber-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-500 font-light"
-                    placeholder="A collection of my most important milestones and achievements"
-                    style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
-                  />
-                </div>
-
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="isPublic"
-                    checked={newTimeline.isPublic}
-                    onChange={(e) => setNewTimeline(prev => ({...prev, isPublic: e.target.checked}))}
-                    className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-amber-300 rounded"
-                  />
-                  <label htmlFor="isPublic" className="ml-2 block text-base text-amber-800 font-light" style={{ fontFamily: "'Amatic SC', cursive" }}>
-                    Make timeline public
-                  </label>
                 </div>
               </div>
 
-              <div className="flex gap-3 mt-6">
-                <Button
-                  onClick={() => setShowCreateModal(false)}
-                  variant="outline"
-                  className="flex-1 border-amber-800 text-amber-800 hover:bg-amber-50 font-light"
+              {/* Description */}
+              <div>
+                <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  Tell me more about it...
+                </label>
+                <textarea
+                  value={newMilestone.description}
+                  onChange={(e) => setNewMilestone(prev => ({...prev, description: e.target.value}))}
+                  rows={4}
+                  className="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d] resize-none"
+                  placeholder="How did it feel? What did you learn? What was special about this moment?"
                   style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleCreateTimeline}
-                  className="flex-1 bg-amber-800 hover:bg-amber-900 text-white font-light"
-                  disabled={!newTimeline.title.trim()}
-                  style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
-                >
-                  Create Timeline
-                </Button>
+                />
+              </div>
+
+              {/* Category and Mood */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                    Category
+                  </label>
+                  <select
+                    value={newMilestone.category}
+                    onChange={(e) => setNewMilestone(prev => ({...prev, category: e.target.value}))}
+                    className="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d]"
+                    style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
+                  >
+                    <option value="personal">Personal</option>
+                    <option value="career">Career</option>
+                    <option value="education">Education</option>
+                    <option value="health">Health</option>
+                    <option value="travel">Travel</option>
+                    <option value="relationships">Relationships</option>
+                    <option value="achievements">Achievements</option>
+                    <option value="creative">Creative</option>
+                    <option value="financial">Financial</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                    How did it feel?
+                  </label>
+                  <select
+                    value={newMilestone.mood}
+                    onChange={(e) => setNewMilestone(prev => ({...prev, mood: e.target.value as any}))}
+                    className="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d]"
+                    style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1.125rem' }}
+                  >
+                    <option value="happy">😊 Happy</option>
+                    <option value="excited">🎉 Excited</option>
+                    <option value="proud">💪 Proud</option>
+                    <option value="grateful">🙏 Grateful</option>
+                    <option value="reflective">🤔 Reflective</option>
+                    <option value="sad">😢 Sad</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Importance Scale */}
+              <div>
+                <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  How important is this? ({newMilestone.importance}/10)
+                </label>
+                <div className="flex items-center space-x-2">
+                  <span className="text-amber-600">1</span>
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    value={newMilestone.importance}
+                    onChange={(e) => setNewMilestone(prev => ({...prev, importance: parseInt(e.target.value)}))}
+                    className="flex-1 h-3 bg-amber-200 rounded-lg appearance-none cursor-pointer"
+                    style={{
+                      background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${newMilestone.importance * 10}%, #fde68a ${newMilestone.importance * 10}%, #fde68a 100%)`
+                    }}
+                  />
+                  <span className="text-amber-600">10</span>
+                </div>
+              </div>
+
+              {/* Tags */}
+              <div>
+                <label className="block text-lg font-semibold text-[#4b3a2d] mb-2" style={{ fontFamily: "'Amatic SC', cursive" }}>
+                  Tags
+                </label>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {newMilestone.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-amber-100 text-amber-800 border border-amber-200"
+                      style={{ fontFamily: "'Amatic SC', cursive" }}
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => removeTag(tag)}
+                        className="ml-2 w-4 h-4 rounded-full bg-amber-200 hover:bg-amber-300 flex items-center justify-center text-amber-700"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={currentTag}
+                    onChange={(e) => setCurrentTag(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addTag(currentTag);
+                      }
+                    }}
+                    className="flex-1 px-4 py-2 border-2 border-amber-200 rounded-xl focus:outline-none focus:border-amber-500 bg-amber-50/50 text-[#4b3a2d]"
+                    placeholder="Add tags like 'milestone', 'new-beginnings'..."
+                    style={{ fontFamily: "'Amatic SC', cursive", fontSize: '1rem' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => addTag(currentTag)}
+                    className="px-4 py-2 bg-amber-200 hover:bg-amber-300 text-amber-800 rounded-xl transition-colors"
+                    style={{ fontFamily: "'Amatic SC', cursive" }}
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
             </div>
+
+            <div className="flex gap-3 mt-8">
+              <Button
+                onClick={() => setShowMilestoneModal(false)}
+                variant="outline"
+                className="flex-1 border-2 border-amber-200 text-amber-800 hover:bg-amber-50 text-lg py-3"
+                style={{ fontFamily: "'Amatic SC', cursive" }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleCreateMilestone}
+                className="flex-1 bg-amber-800 hover:bg-amber-900 text-white text-lg py-3 shadow-lg"
+                disabled={!newMilestone.title.trim()}
+                style={{ fontFamily: "'Amatic SC', cursive" }}
+              >
+                Save Moment
+              </Button>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 }

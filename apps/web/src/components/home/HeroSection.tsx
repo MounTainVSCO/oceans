@@ -2,7 +2,7 @@ import { DogAnimation } from './anim/dog';
 
 export function HeroSection() {
   return (
-    <section id="hero" className="relative">
+    <section id="hero" className="relative h-screen overflow-hidden">
       <svg
         aria-hidden="true"
         className="absolute inset-0 -z-10 size-full stroke-foreground/10 opacity-60 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] dark:opacity-40"
@@ -45,9 +45,9 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 lg:flex lg:h-screen lg:items-center lg:justify-between lg:px-12 lg:min-w-max overflow-x-auto lg:gap-16">
+      <div className="mx-auto max-w-7xl h-screen px-6 lg:flex lg:items-center lg:justify-between lg:px-12 overflow-hidden">
         <div
-          className="mx-auto mt-4 max-w-3xl shrink-0 lg:mx-0 lg:mt-0 lg:max-w-xl lg:h-full flex flex-col justify-center lg:flex-1"
+          className="mx-auto max-w-3xl shrink-0 lg:mx-0 lg:mt-0 lg:max-w-xl lg:h-full flex flex-col justify-center lg:flex-1"
           style={{ opacity: 1, transform: "none" }}
         >
           <div className="hidden items-center gap-x-4 sm:flex">
@@ -92,8 +92,8 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="mx-auto mt-8 flex max-w-2xl sm:mt-12 lg:mt-0 lg:max-w-none lg:flex-1 lg:h-full min-w-0 flex-shrink-0 items-center justify-end lg:pl-8 xl:pl-16">
-          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none flex items-center justify-center lg:translate-x-8 xl:translate-x-16">
+        <div className="mx-auto mt-8 flex max-w-2xl sm:mt-12 lg:mt-0 lg:max-w-none lg:flex-1 lg:h-full flex-shrink-0 items-center justify-start">
+          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none flex items-center justify-center">
             <div style={{ opacity: 1, transform: "none" }}>
               <div style={{ transform: "perspective(1400px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)" }}>
                 <DogAnimation />
