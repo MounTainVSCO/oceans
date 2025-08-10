@@ -18,10 +18,6 @@ export function HomePage() {
       <HeroSection />
       <FeaturesSection />
       <CozyMemoryBook />
-      <AppPreviewSection />
-      <StatsSection />
-      <SocialProofSection />
-      <FAQ />
 
 
       <CTASection />

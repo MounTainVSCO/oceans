@@ -367,18 +367,19 @@ export function CozyMemoryBook() {
 
 
       {/* Main Content - Book Layout */}
-      <div className="pt-32 pb-12 px-8">
-      <div className="bg-white/80 backdrop-blur-md rounded-full px-8 py-4 shadow-xl border-2 border-amber-200/30">
-          <div className="flex items-center gap-4">
-            <CozyCat />
-            <div className="text-center">
-              <h1 className="text-xl font-bold text-stone-800">Memory Book</h1>
-              <p className="text-xs text-stone-600">2024 • A year to remember</p>
-            </div>
-          </div>
-        </div>
-
+      <div className="pt-16 pb-12 px-8">
         <div className="max-w-7xl mx-auto">
+          
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-3xl font-bold text-stone-800 mb-2">Memory Book</h1>
+            <p className="text-stone-600">2024 • A year to remember</p>
+          </div>
+
+          {/* Cat in the middle with margin bottom */}
+          <div className="flex justify-center mb-16">
+            <CozyCat />
+          </div>
           
           {/* Memory Grid - Like an open book */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
@@ -431,13 +432,55 @@ export function CozyMemoryBook() {
             </button>
           </div>
 
-          {/* Footer */}
-          <div className="text-center mt-12">
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/50 backdrop-blur-sm rounded-full border border-amber-200/30">
-              <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-stone-600">
-                {memories.length} beautiful memories collected
-              </span>
+          {/* Cozy Footer */}
+          <div className="text-center mt-16">
+            <div className="relative inline-block">
+              {/* Main footer card */}
+              <div className="bg-gradient-to-r from-amber-50/90 via-stone-50/80 to-amber-50/90 backdrop-blur-md rounded-3xl px-8 py-6 shadow-xl border-2 border-amber-200/40 transform rotate-1 hover:rotate-0 transition-all duration-500">
+                <div className="flex items-center justify-center gap-4 mb-3">
+                  {/* Decorative elements */}
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-amber-300 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                    <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+                  </div>
+                  
+                  {/* Heart icon */}
+                  <div className="text-amber-600 text-lg animate-pulse">♡</div>
+                  
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" style={{animationDelay: '1.5s'}}></div>
+                    <div className="w-2 h-2 bg-amber-300 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" style={{animationDelay: '2.5s'}}></div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <p className="text-lg font-bold text-stone-800 font-serif">
+                    {memories.length} precious moments
+                  </p>
+                  <p className="text-sm text-stone-600 italic">
+                    "Every memory is a treasure worth keeping close to your heart"
+                  </p>
+                </div>
+                
+                {/* Subtle decorative line */}
+                <div className="mt-4 flex justify-center">
+                  <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-amber-300/60 to-transparent rounded-full"></div>
+                </div>
+              </div>
+              
+              {/* Floating decorative elements */}
+              <div className="absolute -top-2 -left-2 w-6 h-6 bg-amber-200/60 rounded-full blur-sm animate-bounce" style={{animationDelay: '0.5s', animationDuration: '3s'}}></div>
+              <div className="absolute -bottom-1 -right-3 w-4 h-4 bg-stone-300/50 rounded-full blur-sm animate-bounce" style={{animationDelay: '1.5s', animationDuration: '4s'}}></div>
+              <div className="absolute top-1/2 -right-4 w-3 h-3 bg-amber-300/40 rounded-full blur-sm animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}}></div>
+            </div>
+            
+            {/* Additional cozy message */}
+            <div className="mt-8 opacity-70">
+              <p className="text-xs text-stone-500 font-mono tracking-wider">
+                Made with warmth & care ✨
+              </p>
             </div>
           </div>
 
